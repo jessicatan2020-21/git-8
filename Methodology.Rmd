@@ -119,7 +119,7 @@ af_cleaning_text$location <- with(location, location[match(af_cleaning_text$id, 
 af_cleaning_text$date <- with(dates, date[match(af_cleaning_text$id, id)])
 af_cleaning_text$year <- format(as.Date(af_cleaning_text$date, format="%d/%m/%Y"), "%Y")
 after_clean_text <- af_cleaning_text
-      #alldata$market<-with(zipcodes, market[match(alldata$zip, zip)])               
+                   
 ```
 
 
@@ -129,7 +129,7 @@ text_count <-after_clean_text %>%
   summarize(value = n_distinct(id))
 ```
 
-```{r, fig.width=8, fig.height=6}
+```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 text_count %>%
   mutate(newsgroup = reorder(newsgroup, value)) %>%
   ggplot(aes(value, newsgroup)) +
@@ -140,7 +140,7 @@ text_count %>%
 ```
 
 
-```{r, fig.width=8, fig.height=6}
+```{r, layout="l-body-outset", fig.width=11, fig.height=6}
 ggplot(af_cleaning_text, 
        aes(x= as.numeric(year),
            fill=newsgroup)) +
@@ -198,7 +198,7 @@ words_by_newsgroup <- usenet_words %>%
 
 
 
-```{r, fig.width=8, fig.height=6}
+```{r, layout="l-body-outset",  fig.width=8, fig.height=6}
 
 newsgroup_sentiments <- words_by_newsgroup %>%
   mutate(word=wordStem(word))%>%
@@ -221,7 +221,7 @@ tf_idf <- words_by_newsgroup %>%
 
 ```
 
-```{r echo=TRUE, eval=TRUE, layout="l-body-outset", fig.width=18, fig.height=15}
+```{r echo=TRUE, eval=TRUE, layout="l-body-outset", fig.width=15, fig.height=12}
 tf_idf %>%
   group_by(newsgroup) %>%
   slice_max(tf_idf, n = 4) %>%
@@ -338,18 +338,7 @@ names(art_cors_table3)[5] <- paste("text2")
 art_cors_table3
 ```
 
-rownames = FALSE,,
-              filter = 'top'
-              options = list(pageLength=4),%>%
-  formatStyle(0, target = "row",
-              lineHeight = "85%")
 
-
-
-#```{r, layout="l-body-outset"}
-#DT::datatable(articles)
-
-#```
 
 
 ```{r}
@@ -363,7 +352,7 @@ newsgroup_cors1 <- words_by_newsgroup %>%
 
 
 
-```{r, layout="l-body-outset", fig.width=10, fig.height=8}
+```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 set.seed(2017)
 
 
@@ -382,7 +371,7 @@ newsgroup_cors1 %>%
 ```
 
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=6}
+```{r, layout="l-body-outset", fig.width=14, fig.height=6}
 DT::datatable(art_cors_table1,
               rownames = FALSE,
               options = list(pageLength=8),
@@ -417,8 +406,8 @@ top_sentiment_words <- words_by_newsgroup %>%
 
 ```
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=6}
-DT::datatable(top_sentiment_words, 
+```{r, layout="l-body-outset", fig.width=12, fig.height=6}
+DT::datatable(top_sentiment_words, rownames = FALSE,
               options = list(pageLength=8), 
               filter = 'top')%>% 
   formatRound('value',4) %>%
@@ -444,7 +433,7 @@ usenet_bigram_counts <- usenet_bigrams %>%
 
 
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=6}
+```{r, layout="l-body-outset", fig.width=10, fig.height=12}
 
 key_persons <- c("sanjorge", "carmine", "nespola", "marek", 
                  "bodrogi", "jeroen","juliana","kapelou", "elian")
@@ -469,7 +458,7 @@ usenet_bigram_counts %>%
 ```
 
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=6}
+```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 
 key_entities <- c("pok", "government", "gastech", "wfa")
 
@@ -492,7 +481,7 @@ usenet_bigram_counts %>%
 ```
 
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=6}
+```{r, layout="l-body-outset", fig.width=15, fig.height=10}
 
 key_places <- c("tiskele", "elodis", "kronos","tethys", 
                 "abila", "rural", "city", "fields", "port", "pilau")
@@ -515,7 +504,7 @@ usenet_bigram_counts %>%
 
 ```
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=6}
+```{r, layout="l-body-outset", fig.width=10, fig.height=12}
 
 key_places <- c("contamination", "protests", "kidnapping", "death","arrested",
                 "disease", "movement", "alliance")
@@ -679,7 +668,7 @@ GAStech_graph <- tbl_graph(nodes = GASTech_nodes,
 GAStech_graph
 ```
 
-```{r, layout="l-body-outset", fig.width=14, fig.height=9}
+```{r, layout="l-body-outset", fig.height=11}
 g <- GAStech_graph %>%
   ggraph(layout = "fr") + 
   geom_edge_link(aes(width=Weight), 
@@ -699,11 +688,11 @@ GASTech_nodes_selected <- GASTech_nodes[,c(1,14, 15,8,17)]
 ```
 
 
-```{r, layout="l-body-outset", fig.width=6, fig.height=1.5}
+```{r, layout="l-body-outset", fig.width=8, fig.height=10}
 DT::datatable(GASTech_nodes_selected, 
               colnames = c("Department"=3, "Position"=4,"Country"=5,
                            "Military Service"=6),
-              options = list(pageLength=8), 
+              options = list(pageLength=7), 
               filter = 'top')%>%
   formatStyle(0, 
               target = 'row',
@@ -711,7 +700,7 @@ DT::datatable(GASTech_nodes_selected,
 ```
 
 
-```{r, layout="l-body-outset", fig.width=10, fig.height=8}
+```{r, layout="l-body-outset", fig.width=10, fig.height=6}
 set_graph_style() 
 
 g <- ggraph(GAStech_graph, 
@@ -730,7 +719,7 @@ g + facet_edges(~Weekday) +
 ```
 
 
-```{r, layout="l-body-outset", fig.width=14, fig.height=9}
+```{r, layout="l-body-outset", fig.width=12, fig.height=8}
 g <- GAStech_graph %>%
   ggraph(layout = "fr") + 
   geom_edge_link(aes(width=Weight), 
@@ -743,7 +732,7 @@ g + theme_graph()
 ```
 
 
-```{r, layout="l-body-outset", fig.width=10, fig.height=8}
+```{r, layout="l-body-outset", fig.width=8}
 g <- GAStech_graph %>%
   ggraph(layout = "fr") + 
   geom_edge_link(aes(width=Weight), 
@@ -751,7 +740,7 @@ g <- GAStech_graph %>%
   scale_edge_width(range = c(0.1, 5)) +
   geom_node_point(aes(colour = CitizenshipCountry, 
                       size = centrality_betweenness()))+
-  ggtitle("Nodes & Edges of Email Network - Citizenship Country")
+  ggtitle("Email Network - Citizenship Country")
 
 g + theme_graph()
 ```
