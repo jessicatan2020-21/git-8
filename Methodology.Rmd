@@ -129,7 +129,7 @@ text_count <-after_clean_text %>%
   summarize(value = n_distinct(id))
 ```
 
-```{r}
+```{r, layout="l-body-outset"}
 text_count %>%
   mutate(newsgroup = reorder(newsgroup, value)) %>%
   ggplot(aes(value, newsgroup)) +
@@ -140,8 +140,7 @@ text_count %>%
 ```
 
 
-```{r}
-
+```{r, layout="l-body-outset"}
 ggplot(af_cleaning_text, 
        aes(x= as.numeric(year),
            fill=newsgroup)) +
@@ -199,7 +198,7 @@ words_by_newsgroup <- usenet_words %>%
 
 
 
-```{r}
+```{r, layout="l-body-outset"}
 
 newsgroup_sentiments <- words_by_newsgroup %>%
   mutate(word=wordStem(word))%>%
