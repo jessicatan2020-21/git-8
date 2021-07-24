@@ -4,7 +4,7 @@ author:
   - name: Jessica Tan
 date: "`r Sys.Date()`"
 output: distill::distill_article
-code_folding: true
+
 ---
 
 ```{r setup, include=FALSE}
@@ -129,7 +129,7 @@ text_count <-after_clean_text %>%
   summarize(value = n_distinct(id))
 ```
 
-```{r, layout="l-body-outset"}
+```{r, fig.width=8, fig.height=6}
 text_count %>%
   mutate(newsgroup = reorder(newsgroup, value)) %>%
   ggplot(aes(value, newsgroup)) +
@@ -140,7 +140,7 @@ text_count %>%
 ```
 
 
-```{r, layout="l-body-outset"}
+```{r, fig.width=8, fig.height=6}
 ggplot(af_cleaning_text, 
        aes(x= as.numeric(year),
            fill=newsgroup)) +
@@ -198,7 +198,7 @@ words_by_newsgroup <- usenet_words %>%
 
 
 
-```{r, layout="l-body-outset"}
+```{r, fig.width=8, fig.height=6}
 
 newsgroup_sentiments <- words_by_newsgroup %>%
   mutate(word=wordStem(word))%>%
@@ -221,10 +221,10 @@ tf_idf <- words_by_newsgroup %>%
 
 ```
 
-```{r echo=TRUE, eval=TRUE, layout="l-body-outset"}
+```{r echo=TRUE, eval=TRUE, layout="l-body-outset", fig.width=18, fig.height=15}
 tf_idf %>%
   group_by(newsgroup) %>%
-  slice_max(tf_idf, n = 5) %>%
+  slice_max(tf_idf, n = 4) %>%
   ungroup() %>%
   mutate(word = reorder(word, tf_idf)) %>%
   ggplot(aes(tf_idf, word, fill = newsgroup)) +
@@ -363,7 +363,7 @@ newsgroup_cors1 <- words_by_newsgroup %>%
 
 
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=10, fig.height=8}
 set.seed(2017)
 
 
@@ -382,7 +382,7 @@ newsgroup_cors1 %>%
 ```
 
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 DT::datatable(art_cors_table1,
               rownames = FALSE,
               options = list(pageLength=8),
@@ -402,10 +402,10 @@ totalwords <- words_by_newsgroup %>%
 
 ```
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 set.seed(1234)
 wordcloud(totalwords$word,totalwords$n,max.words = 115,
-          colors = brewer.pal(9, "Dark2"))
+          colors = brewer.pal(8, "Dark2"))
 
 ```
 
@@ -417,14 +417,15 @@ top_sentiment_words <- words_by_newsgroup %>%
 
 ```
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 DT::datatable(top_sentiment_words, 
+              options = list(pageLength=8), 
               filter = 'top')%>% 
   formatRound('value',4) %>%
   formatRound('contribution',4) %>%
   formatStyle(0, 
               target = 'row', 
-              lineHeight='70%')
+              lineHeight='90%')
 ```
 
 
@@ -443,7 +444,7 @@ usenet_bigram_counts <- usenet_bigrams %>%
 
 
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 
 key_persons <- c("sanjorge", "carmine", "nespola", "marek", 
                  "bodrogi", "jeroen","juliana","kapelou", "elian")
@@ -468,7 +469,7 @@ usenet_bigram_counts %>%
 ```
 
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 
 key_entities <- c("pok", "government", "gastech", "wfa")
 
@@ -491,7 +492,7 @@ usenet_bigram_counts %>%
 ```
 
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 
 key_places <- c("tiskele", "elodis", "kronos","tethys", 
                 "abila", "rural", "city", "fields", "port", "pilau")
@@ -514,7 +515,7 @@ usenet_bigram_counts %>%
 
 ```
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 
 key_places <- c("contamination", "protests", "kidnapping", "death","arrested",
                 "disease", "movement", "alliance")
@@ -678,14 +679,15 @@ GAStech_graph <- tbl_graph(nodes = GASTech_nodes,
 GAStech_graph
 ```
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=14, fig.height=9}
 g <- GAStech_graph %>%
   ggraph(layout = "fr") + 
   geom_edge_link(aes(width=Weight), 
                  alpha=0.2) +
   scale_edge_width(range = c(0.1, 5)) +
   geom_node_point(aes(colour = Name, 
-                      size = centrality_betweenness()))
+                      size = centrality_betweenness()))+
+  ggtitle("Nodes & Edges of Email Network - Key Individuals")
 g + theme_graph()
 ```
 
@@ -697,11 +699,11 @@ GASTech_nodes_selected <- GASTech_nodes[,c(1,14, 15,8,17)]
 ```
 
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=6, fig.height=1.5}
 DT::datatable(GASTech_nodes_selected, 
               colnames = c("Department"=3, "Position"=4,"Country"=5,
                            "Military Service"=6),
-              options = list(pageLength=10), 
+              options = list(pageLength=8), 
               filter = 'top')%>%
   formatStyle(0, 
               target = 'row',
@@ -709,7 +711,7 @@ DT::datatable(GASTech_nodes_selected,
 ```
 
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=10, fig.height=8}
 set_graph_style() 
 
 g <- ggraph(GAStech_graph, 
@@ -718,7 +720,8 @@ g <- ggraph(GAStech_graph,
                  alpha=0.2) +
   scale_edge_width(range = c(0.1, 5)) +
   geom_node_point(aes(colour = CurrentEmploymentType), 
-                  size = 2)
+                  size = 2)+
+  ggtitle("Nodes & Edges of Email Network - Day of Week")
   
 g + facet_edges(~Weekday) +
   th_foreground(foreground = "grey80",  
@@ -727,38 +730,42 @@ g + facet_edges(~Weekday) +
 ```
 
 
-
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=14, fig.height=9}
 g <- GAStech_graph %>%
   ggraph(layout = "fr") + 
   geom_edge_link(aes(width=Weight), 
                  alpha=0.2) +
   scale_edge_width(range = c(0.1, 5)) +
   geom_node_point(aes(colour = CurrentEmploymentTitle, 
-                      size = centrality_betweenness()))
+                      size = centrality_betweenness()))+
+  ggtitle("Nodes & Edges of Email Network - Job Holders")
 g + theme_graph()
 ```
 
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=10, fig.height=8}
 g <- GAStech_graph %>%
   ggraph(layout = "fr") + 
   geom_edge_link(aes(width=Weight), 
                  alpha=0.2) +
   scale_edge_width(range = c(0.1, 5)) +
   geom_node_point(aes(colour = CitizenshipCountry, 
-                      size = centrality_betweenness()))
+                      size = centrality_betweenness()))+
+  ggtitle("Nodes & Edges of Email Network - Citizenship Country")
+
 g + theme_graph()
 ```
 
 
-```{r, layout="l-body-outset"}
+```{r, layout="l-body-outset", fig.width=10, fig.height=8}
 g <- GAStech_graph %>%
   ggraph(layout = "fr") + 
   geom_edge_link(aes(width=Weight), 
                  alpha=0.2) +
   scale_edge_width(range = c(0.1, 5)) +
   geom_node_point(aes(colour = MilitaryServiceBranch, 
-                      size = centrality_betweenness()))
+                      size = centrality_betweenness()))+
+  ggtitle("Nodes & Edges of Email Network - Military Service Branch")
+
 g + theme_graph()
 ```
