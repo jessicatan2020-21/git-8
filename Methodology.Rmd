@@ -1,11 +1,10 @@
 ---
 title: "Methodology"
-author:
-  - name: Jessica Tan
-date: "`r Sys.Date()`"
+author: "Jessica Tan"
+date: "7/25/2021"
 output: distill::distill_article
-
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.retina=3,
