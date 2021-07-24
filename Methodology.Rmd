@@ -129,7 +129,7 @@ text_count <-after_clean_text %>%
   summarize(value = n_distinct(id))
 ```
 
-```{r}
+```{r, layout="l-body-outset", fig.width=10, fig.height=8}
 text_count %>%
   mutate(newsgroup = reorder(newsgroup, value)) %>%
   ggplot(aes(value, newsgroup)) +
@@ -140,7 +140,7 @@ text_count %>%
 ```
 
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=6}
+```{r, layout="l-body-outset", fig.width=10, fig.height=8}
 ggplot(af_cleaning_text, 
        aes(x= as.numeric(year),
            fill=newsgroup)) +
@@ -391,7 +391,7 @@ totalwords <- words_by_newsgroup %>%
 
 ```
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=8}
+```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 set.seed(1234)
 wordcloud(totalwords$word,totalwords$n,max.words = 115,
           colors = brewer.pal(8, "Dark2"))
@@ -406,7 +406,8 @@ top_sentiment_words <- words_by_newsgroup %>%
 
 ```
 
-```{r, layout="l-body-outset", fig.width=12, fig.height=6}
+```{r, layout="l-body-outset", fig.width=12, fig.height=10}
+
 DT::datatable(top_sentiment_words, rownames = FALSE,
               options = list(pageLength=8), 
               filter = 'top')%>% 
@@ -433,7 +434,7 @@ usenet_bigram_counts <- usenet_bigrams %>%
 
 
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=12}
+```{r, layout="l-body-outset", fig.width=10, fig.height=12}
 
 key_persons <- c("sanjorge", "carmine", "nespola", "marek", 
                  "bodrogi", "jeroen","juliana","kapelou", "elian")
@@ -458,7 +459,7 @@ usenet_bigram_counts %>%
 ```
 
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=8}
+```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 
 key_entities <- c("pok", "government", "gastech", "wfa")
 
@@ -481,7 +482,7 @@ usenet_bigram_counts %>%
 ```
 
 
-```{r, layout="l-body-outset", fig.width=10, fig.height=8}
+```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 
 key_places <- c("tiskele", "elodis", "kronos","tethys", 
                 "abila", "rural", "city", "fields", "port", "pilau")
@@ -504,7 +505,7 @@ usenet_bigram_counts %>%
 
 ```
 
-```{r,layout="l-body-outset", fig.width=6, fig.height=8}
+```{r,layout="l-body-outset", fig.width=10, fig.height=10}
 
 key_places <- c("contamination", "protests", "kidnapping", "death","arrested",
                 "disease", "movement", "alliance")
