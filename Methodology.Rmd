@@ -133,12 +133,12 @@ af_cleaning_text$location <- with(location, location[match(af_cleaning_text$id, 
 af_cleaning_text$date <- with(dates, date[match(af_cleaning_text$id, id)])
 af_cleaning_text$year <- format(as.Date(af_cleaning_text$date, format="%d/%m/%Y"), "%Y")
 after_clean_text <- af_cleaning_text
-                   
 ```
+
 
 # 1. Characterize news sources
 
-## 1.1 Frequency & Duration of the News Articles
+## 1.1 Frequency & Duration 
 
 ```{r echo=FALSE}
 text_count <-after_clean_text %>%
@@ -168,7 +168,7 @@ ggplot(af_cleaning_text,
   
 ```
 
-## 1.2 Further text processing - Stopwords Removal & Stemming
+## 1.2 Stopwords Removal & Stemming
 
 ```{r}
 cleaned_text <- raw_text %>%
@@ -208,7 +208,7 @@ usenet_words %>%
   count(word, sort = TRUE)
 ```
 
-Remove meaningless frequent words not removed in stopwords, i.e. title, published & kronos - so that they do not distort the subsequent text visualization:
+Remove meaningless frequent words not previously removed via stopwords, i.e. title, published & kronos - so that they do not distort the subsequent text visualization:
 
 ```{r}
 words_by_newsgroup <- usenet_words %>%
@@ -237,7 +237,11 @@ newsgroup_sentiments %>%
   ggtitle("News Sentiment Score using AFINN Sentiment Lexicon")
 ```
 
-From above, there are indeed a few pairs/groups of common sentiment score profiles, e.g. The Abila Post and Central Bulletin had same sentiment scores. Could these pairs/groups be posting common or similar news articles resulting in the same scores? If so, which is the primary and derivative sources? We seek to find out in the following analysis.
+From above, there are indeed quite a few pairs/groups of newsgroups with similar word sentiment profiles, e.g. The Abila Post and Central Bulletin had same sentiment scores. Could these pairs/groups be posting common or similar news articles to result in the same scores? If so, which are the primary and derivative sources? We seek to understand this in the following analysis.
+
+
+
+## 1.4 Detect important words by newsgroup via TFIDF
 
 The following step is to identify the most important words for each newsgroup using tfidf:
 
@@ -248,7 +252,6 @@ tf_idf <- words_by_newsgroup %>%
 
 ```
 
-## 1.4 To detect important words by newsgroup using TFIDF
 
 ```{r echo=TRUE, eval=TRUE, layout="l-body-outset", fig.width=16, fig.height=10}
 tf_idf %>%
@@ -267,9 +270,9 @@ tf_idf %>%
 The above shows some newsgroup with common profiles in terms of TFIDF. This would be investigated further below by reviewing the correlation of the news articles.
 
 
-## 1.4 To identify news articles with high correlation
+## 1.5 Identify news articles with high correlation
 
-First, pairwise correlation score is calculated by article text of each newsgroup:
+First, pairwise correlation is calculated for the news article texts in each newsgroup which would be used to plot the link analysis of the newsgroups:
 
 
 ```{r}

@@ -2238,7 +2238,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 </div>
 <h1 id="characterize-news-sources">1. Characterize news sources</h1>
-<h2 id="frequency-duration-of-the-news-articles">1.1 Frequency &amp; Duration of the News Articles</h2>
+<h2 id="frequency-duration">1.1 Frequency &amp; Duration</h2>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -2266,7 +2266,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="Methodology_files/figure-html5/unnamed-chunk-12-1.png" width="960" /></p>
 </div>
-<h2 id="further-text-processing---stopwords-removal-stemming">1.2 Further text processing - Stopwords Removal &amp; Stemming</h2>
+<h2 id="stopwords-removal-stemming">1.2 Stopwords Removal &amp; Stemming</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cleaned_text</span> <span class='op'>&lt;-</span> <span class='va'>raw_text</span> <span class='op'>%&gt;%</span>
@@ -2324,7 +2324,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 10 elodi     459
 # ... with 3,881 more rows</code></pre>
 </div>
-<p>Remove meaningless frequent words not removed in stopwords, i.e. title, published &amp; kronos - so that they do not distort the subsequent text visualization:</p>
+<p>Remove meaningless frequent words not previously removed via stopwords, i.e. title, published &amp; kronos - so that they do not distort the subsequent text visualization:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>words_by_newsgroup</span> <span class='op'>&lt;-</span> <span class='va'>usenet_words</span> <span class='op'>%&gt;%</span>
@@ -2355,7 +2355,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="Methodology_files/figure-html5/unnamed-chunk-18-1.png" width="960" /></p>
 </div>
-<p>From above, there are indeed a few pairs/groups of common sentiment score profiles, e.g. The Abila Post and Central Bulletin had same sentiment scores. Could these pairs/groups be posting common or similar news articles resulting in the same scores? If so, which is the primary and derivative sources? We seek to find out in the following analysis.</p>
+<p>From above, there are indeed quite a few pairs/groups of newsgroups with similar word sentiment profiles, e.g. The Abila Post and Central Bulletin had same sentiment scores. Could these pairs/groups be posting common or similar news articles to result in the same scores? If so, which are the primary and derivative sources? We seek to understand this in the following analysis.</p>
+<h2 id="detect-important-words-by-newsgroup-via-tfidf">1.4 Detect important words by newsgroup via TFIDF</h2>
 <p>The following step is to identify the most important words for each newsgroup using tfidf:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2365,7 +2366,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </code></pre>
 </div>
 </div>
-<h2 id="to-detect-important-words-by-newsgroup-using-tfidf">1.4 To detect important words by newsgroup using TFIDF</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tf_idf</span> <span class='op'>%&gt;%</span>
@@ -2383,8 +2383,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p><img src="Methodology_files/figure-html5/unnamed-chunk-20-1.png" width="1536" /></p>
 </div>
 <p>The above shows some newsgroup with common profiles in terms of TFIDF. This would be investigated further below by reviewing the correlation of the news articles.</p>
-<h2 id="to-identify-news-articles-with-high-correlation">1.4 To identify news articles with high correlation</h2>
-<p>First, pairwise correlation score is calculated by article text of each newsgroup:</p>
+<h2 id="identify-news-articles-with-high-correlation">1.5 Identify news articles with high correlation</h2>
+<p>First, pairwise correlation is calculated for the news article texts in each newsgroup which would be used to plot the link analysis of the newsgroups:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>newsgroup_cors1</span> <span class='op'>&lt;-</span> <span class='va'>words_by_newsgroup</span> <span class='op'>%&gt;%</span>
