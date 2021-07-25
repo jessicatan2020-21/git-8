@@ -477,7 +477,8 @@ DT::datatable(top_sentiment_words, rownames = FALSE,
 
 ## 2.3 Compute & apply word bigram in news sentiment analysis
 
-The word bigrams are calculated for the news articles
+The word bigrams are calculated for the news articles:
+
 ```{r}
 usenet_bigrams <- cleaned_text %>%
   unnest_tokens(bigram, text, token = "ngrams", n = 2)
@@ -601,6 +602,10 @@ usenet_bigram_counts %>%
 For events reported, the sentiment scores seem to be correct for most, i.e. negative sentiment associated with arrests, deaths, protests etc. However, for events such as disease and contamination, the associated words such as "responsible" and "increased" (which are classified by AFINN as positive sentiment words) may have incorrectly tilted the sentiment scores in the positive direction.  
 
 
+# 3. Identify potential official and unoffical relationships 
+
+## 3.1 Import employee emails, records & background data 
+
 ```{r}
 raw_emails <- read_csv("data/email headers.csv")
 
@@ -611,20 +616,32 @@ employee_rec <- read_excel("data/EmployeeRecords.xlsx")
 
 ```
 
+Please NOTE: From MC1' case data in 2014, the tabulated background and relationship association for key individuals in the GASTech saga are retrieved and imported herein to help with the background analysis of GASTech staff and their affiliation to external organizations such as POK, Government or WFA.
+
+```{r}
+employee_backgrounds <- read_excel("data/backgrounds.xlsx")
+```
+
+
+## 3.2 Data preparation 
+
+Format datetime column:
+
 ```{r echo=TRUE, eval=TRUE}
 raw_emails$Date <- date_time_parse(raw_emails$Date,
                                    zone = "",
                                    format = "%m/%d/%Y %H:%M")
 ```
 
+Impute weekday from date:
 
 ```{r echo=TRUE, eval=TRUE}
 raw_emails$Weekday = wday(raw_emails$Date, 
                              label = TRUE, 
                              abbr = FALSE)
-
 ```
 
+Remove email tails to extract name column:
 
 ```{r echo=TRUE, eval=TRUE}
 cleaned_emails <- raw_emails%>%
@@ -632,10 +649,8 @@ cleaned_emails <- raw_emails%>%
   mutate(To = str_remove_all(To, From))%>%
   mutate(To = str_remove_all(To, "@gastech.com.kronos"))%>%
   mutate(To = str_remove_all(To, "@gastech.com.tethys"))
-
 ```
 
-  mutate(To = str_remove_all(To, " "))%>%
 ```{r echo=TRUE, eval=TRUE}
 cleaned_emails <- cleaned_emails%>%
   mutate(From = str_remove_all(From, "@gastech.com.kronos"))%>%
@@ -649,13 +664,15 @@ employee_rec <- employee_rec %>%
 
 ```
 
-##Generate id_From for sender, and id_To for receiver in emails:
+Generate id_From for sender, and id_To for receiver in emails:
+
 ```{r echo=TRUE, eval=TRUE}
 cleaned_emails <- transform(cleaned_emails, id_From 
                             =as.numeric(factor(cleaned_emails$From)))
 
 ```
 
+Create "To" ids to hold multiple recipients for each email:
 
 ```{r echo=TRUE, eval=TRUE}
 cleaned_emails <- cleaned_emails %>% 
@@ -664,13 +681,14 @@ cleaned_emails <- cleaned_emails %>%
 
 ```
 
-
-
+Transpose tables to have columns for each newly create To_id above:
 ```{r}
 email_transpose <- pivot_longer(cleaned_emails, cols=2:13, 
                                  names_to = "Recipient#",
                                  values_to = "To")
 ```
+
+Additional cleaning for CEO Sten Sanjorge to remove "Jr." for ease of data retrieval and filling:
 
 ```{r}
 email_transpose <- email_transpose[complete.cases(email_transpose),]
@@ -679,34 +697,37 @@ email_transpose <- email_transpose[!(email_transpose$To ==
 email_transpose$To[email_transpose$To=="Sten.Sanjorge"] <- "Sten.Sanjorge Jr."
 ```
 
-
+Correct nodes table for subsequent lookup of id:
 
 ```{r}
 nodes <- email_transpose[c("id_From","From")]
 nodes <- nodes%>% distinct()
 names(nodes)[1] <- paste("id")
 names(nodes)[2] <- paste("Name")
-
 ```
+
+Merge nodes to email_transpose for id creation & extraction:
 
 ```{r echo=TRUE, eval=TRUE}
 email_transpose <- merge(x = nodes, y = email_transpose, 
                by.x = "Name", 
                by.y = "To", all.x = TRUE)
-
 ```
 
+Correct column names after merge by pasting over:
 
 ```{r echo=TRUE, eval=TRUE}
 names(email_transpose)[1] <- paste("To")
 names(email_transpose)[2] <- paste("id_To")
 ```
 
+This is to obtain id for recipients (different from earlier to collect id for sender)
 ```{r echo=TRUE, eval=TRUE}
 GASTech_nodes <- merge(x= nodes, y= employee_rec, 
                        by.x = "Name", by.y="EmailAddress", all.x = FALSE)
-
 ```
+
+## 3.3 Create nodes and edges for email network analysis
 
 ```{r echo=TRUE, eval=TRUE}
 GAStech_edges_aggregated <- email_transpose %>%
@@ -724,23 +745,21 @@ glimpse(GAStech_edges_aggregated)
 ```
 
 
-
-
-
 ```{r, echo=TRUE, eval=TRUE}
 GAStech_graph <- tbl_graph(nodes = GASTech_nodes,
                            edges = GAStech_edges_aggregated, 
                            directed = TRUE)
 ```
 
- 
-
-
 ```{r}
 GAStech_graph
 ```
 
-```{r, layout="l-body-outset", fig.width=14, fig.height=11}
+## 3.4 Graphical representation of GASTech's email networks
+
+### 3.4.1 Identify key email personnels (nodes) by name: 
+
+```{r, layout="l-page", fig.width=14, fig.height=11}
 g <- GAStech_graph %>%
   ggraph(layout = "fr") + 
   geom_edge_link(aes(width=Weight), 
@@ -753,26 +772,55 @@ g + theme_graph()
 ```
 
 
-```{r echo=FALSE}
-GASTech_nodes_selected <- GASTech_nodes[,c(1,14, 15,8,17)]
 
 
+### 3.4.2 Identify key email personnels (nodes) by job title:
+
+```{r, layout="l-page", fig.width=12, fig.height=8}
+g <- GAStech_graph %>%
+  ggraph(layout = "fr") + 
+  geom_edge_link(aes(width=Weight), 
+                 alpha=0.2) +
+  scale_edge_width(range = c(0.1, 5)) +
+  geom_node_point(aes(colour = CurrentEmploymentTitle, 
+                      size = centrality_betweenness()))+
+  ggtitle("Nodes & Edges of Email Network - Job Holders")
+g + theme_graph()
 ```
 
+### 3.4.3 Identify key email personnels (nodes) by citizenship country:
 
-```{r, layout="l-body-outset", fig.width=8, fig.height=10}
-DT::datatable(GASTech_nodes_selected, 
-              colnames = c("Department"=3, "Position"=4,"Country"=5,
-                           "Military Service"=6),
-              options = list(pageLength=7), 
-              filter = 'top')%>%
-  formatStyle(0, 
-              target = 'row',
-              lineHeight="95%")
+```{r, layout="l-page",fig.width=10, fig.width=8}
+g <- GAStech_graph %>%
+  ggraph(layout = "fr") + 
+  geom_edge_link(aes(width=Weight), 
+                 alpha=0.2) +
+  scale_edge_width(range = c(0.1, 5)) +
+  geom_node_point(aes(colour = CitizenshipCountry, 
+                      size = centrality_betweenness()))+
+  ggtitle("Email Network - Citizenship Country")
+
+g + theme_graph()
 ```
 
+### 3.4.4 Identify key email personnels (nodes) by military service branch:
 
-```{r, layout="l-body-outset", fig.width=10, fig.height=6}
+```{r, layout="l-page", fig.width=10, fig.height=8}
+g <- GAStech_graph %>%
+  ggraph(layout = "fr") + 
+  geom_edge_link(aes(width=Weight), 
+                 alpha=0.2) +
+  scale_edge_width(range = c(0.1, 5)) +
+  geom_node_point(aes(colour = MilitaryServiceBranch, 
+                      size = centrality_betweenness()))+
+  ggtitle("Nodes & Edges of Email Network - Military Service Branch")
+
+g + theme_graph()
+```
+
+### 3.4.5 View email network mutation over days of the week
+
+```{r, layout="l-page", fig.width=10, fig.height=6}
 set_graph_style() 
 
 g <- ggraph(GAStech_graph, 
@@ -790,43 +838,21 @@ g + facet_edges(~Weekday) +
   theme(legend.position = 'bottom')
 ```
 
+### 3.4.6 Create datatable to provide staff's details by name, department, position, citizenship country, and military service:
 
-```{r, layout="l-body-outset", fig.width=12, fig.height=8}
-g <- GAStech_graph %>%
-  ggraph(layout = "fr") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
-  scale_edge_width(range = c(0.1, 5)) +
-  geom_node_point(aes(colour = CurrentEmploymentTitle, 
-                      size = centrality_betweenness()))+
-  ggtitle("Nodes & Edges of Email Network - Job Holders")
-g + theme_graph()
+```{r echo=FALSE}
+GASTech_nodes_selected <- GASTech_nodes[,c(1,14, 15,8,17)]
+```
+
+```{r, layout="l-page", fig.width=8, fig.height=10}
+DT::datatable(GASTech_nodes_selected, 
+              colnames = c("Department"=3, "Position"=4,"Country"=5,
+                           "Military Service"=6),
+              options = list(pageLength=7), 
+              filter = 'top')%>%
+  formatStyle(0, 
+              target = 'row',
+              lineHeight="95%")
 ```
 
 
-```{r, layout="l-body-outset",fig.width=10, fig.width=8}
-g <- GAStech_graph %>%
-  ggraph(layout = "fr") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
-  scale_edge_width(range = c(0.1, 5)) +
-  geom_node_point(aes(colour = CitizenshipCountry, 
-                      size = centrality_betweenness()))+
-  ggtitle("Email Network - Citizenship Country")
-
-g + theme_graph()
-```
-
-
-```{r, layout="l-body-outset", fig.width=10, fig.height=8}
-g <- GAStech_graph %>%
-  ggraph(layout = "fr") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
-  scale_edge_width(range = c(0.1, 5)) +
-  geom_node_point(aes(colour = MilitaryServiceBranch, 
-                      size = centrality_betweenness()))+
-  ggtitle("Nodes & Edges of Email Network - Military Service Branch")
-
-g + theme_graph()
-```
