@@ -433,10 +433,21 @@ DT::datatable(art_cors_table1,
 With the above datatable, we would be able to identify the primary and derivative news sources for each highly correlated news article pairs (>0.8 correlation) by comparing their published dates. The article with the earlier date would be the primary source as the later article would essentially be obtaining its text from the primary article after the primary article has been published.
 
 
+
+Remove duplicate text columns:
+
+```{r}
+art_cors_table3 <- subset(art_cors_table3, select = -(6))
+art_cors_table4 <- art_cors_table3[,c(1,4,2,5,3)]
+
+```
+
+
 ```{r, layout="l-body-outset", fig.width=14, fig.height=8}
-DT::datatable(art_cors_table1,
+
+DT::datatable(art_cors_table4,
               rownames = FALSE,
-              options = list(pageLength=6),
+              options = list(pageLength=3),
               filter = 'top')%>%
   formatRound(columns = c('correlation'),
               digits = 4)%>%
@@ -841,7 +852,7 @@ DT::datatable(GASTech_nodes_background, rownames = FALSE,
 By inputting "POK" in the search tab, all GASTech staff with POK affiliations would be automatically retrieved. In total, there are 5 POK members on GASTech's empployee list, namely, Minke.Mies, Isia.Vann, Loreto.Bodrogi, Hennie.Osvaldo. and Inga.Ferro. To extract all other personnel with external profiles, click on the upward arrow at the "POK/Others" column and you could see all other suspicious member profiles such as Edward.Vann who could be related to the Vann members of POK as well as Ruscella.Mies.Haber (page2) who is aunt of Minke.Mies. Notably, all the staff with POK affiliation are in the Security Department whilst other profiled individuals are in the Administration Department.
 
 
-## 3.4.3 Identify key email personnels (nodes) by citizenship country:
+## 3.4.4 Identify key email personnels (nodes) by citizenship country:
 
 The following network graph would visualize the email communication in terms of the citizenship country of the personnel (represented as nodes):
 
@@ -860,7 +871,7 @@ g + theme_graph()
 
 It is clear from the above network graph that the email communication tend to be clustered amongst individuals from the same country, such as Kronos-centric or Tethys-centric. In the above network graph, there are more Tethy nodes than Kronos nodes although GASTech was located in Kronos. This means many of the GASTech employees are not local Kronosians but foreigners from Tethys.
 
-## 3.4.4 Identify key email personnels (nodes) by military service branch:
+## 3.4.5 Identify key email personnels (nodes) by military service branch:
 
 The following network graph would visualize the email communication in terms of the military service branch of the personnel (represented as nodes):
 
@@ -877,9 +888,9 @@ g <- GAStech_graph %>%
 g + theme_graph()
 ```
 
-The above network graph shows the majority of the employees do not service Military Service. However, for those employees that had served in military, the majority were in the Armed Forces of Kronos and this is a tightly knitted group with close and well-linked email communication network.
+The above network graph shows the majority of the employees did not undergo Military Service. However, for those employees that had undergone military service, the majority were in the Armed Forces of Kronos and this appears a tightly knitted group with close and well-linked email communication network.
 
-## 3.4.5 View email network mutation over days of the week
+## 3.4.6 View email network mutation over days of the week
 
 The following network graph would visualize the email communication in terms of departments-based communication over the course of the week:
 
