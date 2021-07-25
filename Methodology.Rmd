@@ -270,7 +270,7 @@ tf_idf %>%
 The above shows some newsgroups with common profiles in terms of TFIDF. This would be investigated further below by reviewing the correlation of the news articles.
 
 
-## 1.5 Identify news articles with high correlation
+## 1.5 Identify newsgroups with high correlation based on their articles
 
 First, pairwise correlation is calculated for all news articles in each newsgroup:
 
@@ -411,7 +411,7 @@ names(art_cors_table3)[5] <- paste("text2")
 ```
 
 
-### Finally, the datatable for each correlated (>0.8) pair of new articles is ready below for checking and retrieval:
+Finally, the datatable for each correlated (>0.8) pair of new articles is ready below for checking and retrieval:
 
 ```{r, layout="l-body-outset", fig.width=14, fig.height=8}
 DT::datatable(art_cors_table1,
@@ -425,13 +425,13 @@ DT::datatable(art_cors_table1,
 
 ```
 
-### Using the above datatable, we would be able to identify highly correlated news articles as well as their primary and derivatives sources going by the published dates. The article with the earlier date in each pair would be the primary source as the later article would essentially be obtaining its text from the earlier article.
+Using the above datatable, we would be able to identify highly correlated news articles as well as their primary and derivatives sources going by the published dates. The article with the earlier date in each pair would be the primary source as the later article would essentially be obtaining its text from the earlier article.
 
 
 
 # 2. Detect & characterize biases in news articles 
 
-# 2.1 Obtain frequency of important words to perform word cloud:
+## 2.1 Obtain frequency of important words to perform word cloud:
 ```{r}
 totalwords <- words_by_newsgroup %>%
   count(word, sort=TRUE)
@@ -447,9 +447,9 @@ wordcloud(totalwords$word,totalwords$n,max.words = 115,
 
 ```
 
-### The wordcloud the names of the key players and parties including Juliana Vann who died from illness caused by the river contamination, as well as GASTech's CEO, Sten Sanjorge, POK, Government etc.
+The wordcloud the names of the key players and parties including Juliana Vann who died from illness caused by the river contamination, as well as GASTech's CEO, Sten Sanjorge, POK, Government etc.
 
-### We further retrieve the top sentiment words and their scores using AFINN (sentiment words dictionary). This would first be presented in a datatable for ease of retrieval and checking against the sentiment words which would be subsequently plotted for "specific people, places, and events" (in response to Qn 2 of MC1).
+We further retrieve the top sentiment words and their scores using AFINN (sentiment words dictionary). This would first be presented in a datatable for ease of retrieval and checking against the sentiment words which would be subsequently plotted for "specific people, places, and events" (in response to Qn 2 of MC1).
 
 ```{r}
 top_sentiment_words <- words_by_newsgroup %>%
@@ -485,7 +485,7 @@ usenet_bigram_counts <- usenet_bigrams %>%
 
 ```
 
-### The following plots the high frequency sentiment words used in news articles to surround these names (i.e. key individuals for in POK, GasTech and Kronos Government):
+The following plots the high frequency sentiment words used in news articles to surround these names (i.e. key individuals for in POK, GasTech and Kronos Government):
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=12}
 key_persons <- c("sanjorge", "carmine", "nespola", "marek", 
@@ -508,7 +508,7 @@ usenet_bigram_counts %>%
        y = "Words associated with key persons")
 ```
 
-### It can be observed key POK personnel Bodrogi and Carmine elicited positive sentiment scores whilst others such as Elian and Juliana had negative sentiment scores resulting from the occurrence of their deaths. Government officials, Nespola and President Kapelou as well as GASTech CEO Sanjorge also have negative scores resulting from negative words frequenly associated with their names in news articles. Marek, a POK member, also drew negative sentiment score due to the word "stop", a word for obstacle.This will be investigated in the news texts later.  
+It can be observed key POK personnel Bodrogi and Carmine elicited positive sentiment scores whilst others such as Elian and Juliana had negative sentiment scores resulting from the occurrence of their deaths. Government officials, Nespola and President Kapelou as well as GASTech CEO Sanjorge also have negative scores resulting from negative words frequenly associated with their names in news articles. Marek, a POK member, also drew negative sentiment score due to the word "stop", a word for obstacle.This will be investigated in the news texts later.  
 
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
@@ -532,7 +532,7 @@ usenet_bigram_counts %>%
        y = "Words associated with key entities")
 ```
 
-### The above shows the most important sentiment words associated with the key players - GASTech, POK, Government and WFA. WFA, being a non-profit NGO, has positive sentiment scores during to its supportive role. The Government and POK have fairly balanced spread of positive and negative sentiment words due to their supportive roles in their communities as well as negative sentiment words due to their actions which had negative connotations. In comparison, GASTech is skewed towards negative sentiment words due to the issues of contamination surrounding their activities which purported caused harm to the lives of the people.  
+The above shows the most important sentiment words associated with the key players - GASTech, POK, Government and WFA. WFA, being a non-profit NGO, has positive sentiment scores during to its supportive role. The Government and POK have fairly balanced spread of positive and negative sentiment words due to their supportive roles in their communities as well as negative sentiment words due to their actions which had negative connotations. In comparison, GASTech is skewed towards negative sentiment words due to the issues of contamination surrounding their activities which purported caused harm to the lives of the people.  
 
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
@@ -557,7 +557,7 @@ usenet_bigram_counts %>%
        y = "Words associated with important places")
 
 ```
-### Similarly, the above places have varying sentiment scores due to the events reported in association with these places. For example, the numerous protests that occurred in Elodis results in a negatively skewed sentiment score whilst the help provided to the rural areas in positive sentiment score.
+Similarly, the above places have varying sentiment scores due to the events reported in association with these places. For example, the numerous protests that occurred in Elodis results in a negatively skewed sentiment score whilst the help provided to the rural areas in positive sentiment score.
 
 
 ```{r,layout="l-body-outset", fig.width=10, fig.height=10}
@@ -582,7 +582,7 @@ usenet_bigram_counts %>%
        y = "Words associated with key events")
 ```
 
-## For events reported, the sentiment scores seem to be correct for most, i.e. negative sentiment associated with arrests, deaths, protests etc. However, for events such as disease and contamination, the associated words such as "responsible" and "increased" (which are classified by AFINN as positive sentiment words) may have incorrectly tilted the sentiment scores in the positive direction.  
+For events reported, the sentiment scores seem to be correct for most, i.e. negative sentiment associated with arrests, deaths, protests etc. However, for events such as disease and contamination, the associated words such as "responsible" and "increased" (which are classified by AFINN as positive sentiment words) may have incorrectly tilted the sentiment scores in the positive direction.  
 
 
 
