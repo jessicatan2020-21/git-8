@@ -52,7 +52,7 @@ This 3-member student team spent 60 hours using Tableau, JavaScript, Excel and R
 
 ***4.	City University London (giCentre) – Honourable Mention: Novelty in Visualization***
 
-This 3-member faculty team from giCentre of City University spent 80 hours using their in-house visualization tools to examine data and illustrate their responses to the MC1 questions. Whilst my expectation was high due to the technical background of the team, I have to report I am disappointed with the rather unusual and complex graphical illustrations provided by the team. The graphical illustrations were not just visually unappealing to start with, but was also sparse with only 3 charts/graphs. Neither from the graphs or from narration could one envisage what data was examined and how the conclusions were derived. As a result, it is difficult to attribute any positive qualities and justification for the Honourable Mention.
+This 3-member faculty team from giCentre of City University spent 80 hours using their in-house visualization tools to examine data and illustrate their responses to the MC1 questions. Whilst my expectation was high due to the technical background of the team, I have to report I am disappointed with the rather unusual and complex graphical illustrations provided by the team. The graphical illustrations were not just visually unappealing to start with, but was also sparse with only 3 charts/graphs. Neither from the graphs nor from narration could one envisage what data was examined and how the conclusions were derived. As a result, it is difficult to attribute any positive qualities and justification for the Honourable Mention.
 
 # Approach of This Study
 
