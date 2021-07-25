@@ -241,7 +241,7 @@ From above, there are indeed quite a few pairs/groups of newsgroups with similar
 
 
 
-## 1.5 Identify important words by newsgroup based on TFIDF
+## 1.4 Identify important words by newsgroup based on TFIDF
 
 The following step is to identify the most important words for each newsgroup using tfidf:
 
@@ -304,9 +304,9 @@ newsgroup_cors1 %>%
   theme_void()
 ```
 
-From above, we can observe that higher correlation between newsgroups is represented by the thickening and darkening of their edges with each other. For example, "The World" is in the centre of a sub-network of newsgroups and has expressedly stronger correlation with "Who What News". In another sub-network group, "The Abila Post" showed stronger text correlation with "Central Bulletin". 
+From above, we can observe that higher correlation between newsgroups is represented by the thickening and darkening of their edges with each other. For example, "The World" is at the centre of a sub-network of newsgroups and has expressedly stronger correlation with "Who What News". In another sub-network group, "The Abila Post" showed stronger text correlation with "Central Bulletin". 
 
-In total, we observed 5 separate sub-newsgroup network led by 5 core newsgroup which we can infer as the primary news sources since they acted like a hub and showed strong correlation of 0.7 or more with other newsgroups in their hubs. The 5 primary news sources are (1) "The Abila", (2) "The World", (3) "International Times", (4) "Kronos Star", and (5) "Homeland Illumination". The other newsgroups within these hubs are the derivative news sources.    
+In total, we observed 5 separate sub-newsgroup networks led by 5 core newsgroups which we can infer as the primary news sources since they acted like a hub and showed strong correlation of 0.7 or more with other newsgroups in their networks. The 5 primary news sources are (1) "The Abila", (2) "The World", (3) "International Times", (4) "Kronos Star", and (5) "Homeland Illumination". The other newsgroups surrounding these hubs are the derivative news sources.    
 
 
 ## 1.6 Further trace newsgroup correlation in the news articles
@@ -336,7 +336,6 @@ art_cors <- merge(x=art_cors,y=title,
                   by.x = "item1",                         
                   by.y = "id", 
                   all.x = TRUE, all.y = FALSE)
-
 ```
 
 Column names are corrected by pasting over:
@@ -350,25 +349,19 @@ names(art_cors)[7] <- paste("title1")
 art_cors1 <- art_cors[-c(6)]
 ```
 
-
 ```{r}
 art_cors1 <- merge(x=art_cors1,y=title, 
                   by.x = "article2",                         
                   by.y = "id", 
                   all.x = TRUE)
-
 ```
-
 
 ```{r}
 art_cors2 <- merge(x=art_cors1,y=dates, 
                   by.x = "article2",                         
                   by.y = "id", 
                   all.x = TRUE, all.y = FALSE)
-
 ```
-
-To prepare for subsequent visualization, we select only correlated articles more than 0.8:
 
 ```{r}
 names(art_cors2)[7] <- paste("newsgroup2")
@@ -378,8 +371,6 @@ art_cors_final <- art_cors2[-c(9)]
 art_cors_final <- art_cors_final%>%
   filter(correlation >0.8)
 ```
-
-To provide dataframe on news articles pairs, we extract and merge relevant columns for each of the 2 correlated news articles - txt id, newsgroup, date and correlation score. Below is for article 1:
 
 ```{r}
 art_cors_table <- art_cors_final[-c(6,8)]
@@ -391,7 +382,6 @@ art_cors_table2 <- art_cors_table1[, c(1,4,7)]
 
 ```{r eval=FALSE}
 articles <- cleaned_text[, c(2,3)]
-
 ```
 
 ```{r eval=FALSE}
@@ -410,11 +400,7 @@ art_cors_table3 <-  merge(x=art_cors_table2,y=articles,
                           by.y = "id", 
                           all.x = TRUE)
 names(art_cors_table3)[5] <- paste("text2")
-
 ```
-
-
-Finally, the datatable for each correlated (>0.8) pair of new articles is ready below for checking and retrieval:
 
 ```{r, layout="l-body-outset", fig.width=14, fig.height=8}
 DT::datatable(art_cors_table1,
@@ -425,7 +411,6 @@ DT::datatable(art_cors_table1,
               digits = 4)%>%
   formatStyle(0, target = "row",
               lineHeight = "85%")
-
 ```
 
 Using the above datatable, we would be able to identify highly correlated news articles as well as their primary and derivatives sources going by the published dates. The article with the earlier date in each pair would be the primary source as the later article would essentially be obtaining its text from the earlier article.
