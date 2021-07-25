@@ -324,6 +324,7 @@ art_cors <- newsgroup_cors
 ```
 
 Obtain dates for the 1st article in each correlated news article pair:
+
 ```{r}
 art_cors <- merge(x=art_cors,y=dates, 
                   by.x = "item1",                         
@@ -331,6 +332,8 @@ art_cors <- merge(x=art_cors,y=dates,
                   all.x = TRUE, all.y = FALSE)
 
 ```
+
+Obtain news title for 1st article:
 
 ```{r}
 art_cors <- merge(x=art_cors,y=title, 
@@ -350,6 +353,8 @@ names(art_cors)[7] <- paste("title1")
 art_cors1 <- art_cors[-c(6)]
 ```
 
+The same process (as 1st article mentioned above) for 2nd article, starting with title for 2nd article:
+
 ```{r}
 art_cors1 <- merge(x=art_cors1,y=title, 
                   by.x = "article2",                         
@@ -357,12 +362,16 @@ art_cors1 <- merge(x=art_cors1,y=title,
                   all.x = TRUE)
 ```
 
+Retrieve date for 2nd article:
+
 ```{r}
 art_cors2 <- merge(x=art_cors1,y=dates, 
                   by.x = "article2",                         
                   by.y = "id", 
                   all.x = TRUE, all.y = FALSE)
 ```
+
+Correct column titles by pasting over:
 
 ```{r}
 names(art_cors2)[7] <- paste("newsgroup2")
@@ -372,6 +381,8 @@ art_cors_final <- art_cors2[-c(9)]
 art_cors_final <- art_cors_final%>%
   filter(correlation >0.8)
 ```
+
+Remove unnecessary columns resulting from the merging of tables:
 
 ```{r}
 art_cors_table <- art_cors_final[-c(6,8)]
@@ -385,6 +396,8 @@ art_cors_table2 <- art_cors_table1[, c(1,4,7)]
 articles <- cleaned_text[, c(2,3)]
 ```
 
+Retrieving text body for 1st article:
+
 ```{r eval=FALSE}
 art_cors_table2 <-  merge(x=art_cors_table2,y=articles, 
                           by.x = "article1",                         
@@ -393,7 +406,7 @@ art_cors_table2 <-  merge(x=art_cors_table2,y=articles,
 names(art_cors_table2)[4] <- paste("text1")
 ```
 
-Below is for article 2 of each correlated pair of news articles:
+Retrieving text body for second article:
 
 ```{r eval=FALSE}
 art_cors_table3 <-  merge(x=art_cors_table2,y=articles, 
@@ -402,6 +415,8 @@ art_cors_table3 <-  merge(x=art_cors_table2,y=articles,
                           all.x = TRUE)
 names(art_cors_table3)[5] <- paste("text2")
 ```
+
+Finally, the datatable for the correlated news article pairs is set up as follow:
 
 ```{r, layout="l-body-outset", fig.width=14, fig.height=8}
 DT::datatable(art_cors_table1,
@@ -414,7 +429,7 @@ DT::datatable(art_cors_table1,
               lineHeight = "85%")
 ```
 
-Using the above datatable, we would be able to identify highly correlated news articles as well as their primary and derivatives sources going by the published dates. The article with the earlier date in each pair would be the primary source as the later article would essentially be obtaining its text from the earlier article.
+With the above datatable, we would be able to identify the primary and derivative news sources for each highly correlated news article pairs (>0.8 correlation) by comparing their published dates. The article with the earlier date would be the primary source as the later article would essentially be obtaining its text from the primary article after the primary article has been published.
 
 
 
