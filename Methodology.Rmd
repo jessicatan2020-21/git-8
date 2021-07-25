@@ -311,7 +311,7 @@ In total, we observed 5 separate sub-newsgroup networks led by 5 core newsgroups
 
 ## 1.6 Further trace newsgroup correlation in the news articles
 
-In the following, text wrangling is performed to obtain a datatable containing the correlated news article pairs with column details on text id, date, title and newsgroup each of the paired news articles. We selected article pairs with high correlation of >0.8. 
+In the following, text wrangling is performed to obtain a datatable containing the correlated news article pairs with column details on text id, date, title and newsgroup for each of the paired news articles. We selected article pairs with high correlation of >0.8. 
 
 ```{r}
 newsgroup_cors <- words_by_newsgroup %>%
@@ -323,6 +323,7 @@ newsgroup_cors <- words_by_newsgroup %>%
 art_cors <- newsgroup_cors
 ```
 
+Obtain dates for the 1st article in each correlated news article pair:
 ```{r}
 art_cors <- merge(x=art_cors,y=dates, 
                   by.x = "item1",                         
