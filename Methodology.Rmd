@@ -493,7 +493,7 @@ usenet_bigram_counts <- usenet_bigrams %>%
 
 ## 2.4 Sentiment scoring of associated word bigrams - key people
 
-The sentiment scores based on bigrams of the associated words surrounding the news reporting of key individuals are illustrated in the following bar charts:
+The sentiment scores based on bigrams of the associated words surrounding the news reporting of key individuals is illustrated in the following bar charts:
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=12}
 key_persons <- c("sanjorge", "carmine", "nespola", "marek", 
@@ -521,7 +521,7 @@ It can be observed that the key POK personnels i.e., Bodrogi and Carmine elicite
 
 ## 2.5 Sentiment scoring of associated word bigrams - key organizations
 
-The sentiment scoring of word bigrams associated with news reporting of the key organizations - GASTech, POK, Government and WFA - are illustrated in the following bar charts: 
+The sentiment scoring of word bigrams associated with news reporting of the key organizations - GASTech, POK, Government and WFA - is illustrated in the following bar charts: 
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 key_entities <- c("pok", "government", "gastech", "wfa")
@@ -548,7 +548,7 @@ It is observed that WFA, an NGO, had positive sentiment scores in line with its 
 
 ## 2.6 Sentiment scoring of associated word bigrams - key organizations
 
-The sentiment scoring of word bigrams associated with news reporting of the landmark places are illustrated in the following bar charts: 
+The sentiment scoring of word bigrams associated with news reporting of the landmark places is illustrated in the following bar charts: 
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 key_places <- c("tiskele", "elodis", "kronos","tethys", 
@@ -576,6 +576,8 @@ Similarly, the above places have news sentiment scores varying in tandem with th
 
 ## 2.7 Sentiment scoring of associated word bigrams - events occurred
 
+The sentiment scoring of word bigrams associated with news reporting of the important events is illustrated in the following bar charts: 
+
 ```{r,layout="l-body-outset", fig.width=10, fig.height=10}
 key_places <- c("contamination", "protests", "kidnapping", "death","arrested",
                 "disease", "movement", "alliance")
@@ -596,9 +598,7 @@ usenet_bigram_counts %>%
   labs(x = "Sentiment value of occurrences",
        y = "Words associated with key events")
 ```
-
 For events reported, the sentiment scores seem to be correct for most, i.e. negative sentiment associated with arrests, deaths, protests etc. However, for events such as disease and contamination, the associated words such as "responsible" and "increased" (which are classified by AFINN as positive sentiment words) may have incorrectly tilted the sentiment scores in the positive direction.  
-
 
 
 ```{r}
