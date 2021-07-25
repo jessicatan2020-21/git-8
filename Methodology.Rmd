@@ -241,7 +241,7 @@ From above, there are indeed quite a few pairs/groups of newsgroups with similar
 
 
 
-## 1.5 Identify important words by newsgroup via TFIDF
+## 1.5 Identify important words by newsgroup based on TFIDF
 
 The following step is to identify the most important words for each newsgroup using tfidf:
 
@@ -253,7 +253,7 @@ tf_idf <- words_by_newsgroup %>%
 ```
 
 
-```{r echo=TRUE, eval=TRUE, layout="l-body-outset", fig.width=16, fig.height=10}
+```{r echo=TRUE, eval=TRUE, layout="l-page", fig.width=16, fig.height=10}
 tf_idf %>%
   group_by(newsgroup) %>%
   slice_max(tf_idf, n = 4) %>%
@@ -272,7 +272,7 @@ The above shows some newsgroups with common profiles in terms of TFIDF. This wou
 
 ## 1.5 Identify news articles with high correlation
 
-First, pairwise correlation is calculated for the news articles in each newsgroup:
+First, pairwise correlation is calculated for all news articles in each newsgroup:
 
 
 ```{r}
