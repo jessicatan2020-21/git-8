@@ -493,7 +493,7 @@ usenet_bigram_counts <- usenet_bigrams %>%
 
 ## 2.4 Sentiment scoring of associated word bigrams - key people
 
-The sentiment scores based on bigrams ofthe associated words surrounding the news reporting of key individuals are illustrated in the following bar charts:
+The sentiment scores based on bigrams of the associated words surrounding the news reporting of key individuals are illustrated in the following bar charts:
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=12}
 key_persons <- c("sanjorge", "carmine", "nespola", "marek", 
@@ -521,7 +521,7 @@ It can be observed that the key POK personnels i.e., Bodrogi and Carmine elicite
 
 ## 2.5 Sentiment scoring of associated word bigrams - key organizations
 
-The sentiment scores based on bigrams ofthe associated words surrounding the news reporting of the important organizational bodies are also calculated and represented in the following bar charts:
+The sentiment scores based on bigrams of the associated words surrounding news reporting of the important organizational bodies are also calculated and represented in bar charts as provided below:
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 
@@ -544,7 +544,7 @@ usenet_bigram_counts %>%
        y = "Words associated with key entities")
 ```
 
-The above shows the most important sentiment words associated with the key players - GASTech, POK, Government and WFA. WFA, being a non-profit NGO, has positive sentiment scores during to its supportive role. The Government and POK have fairly balanced spread of positive and negative sentiment words due to their supportive roles in their communities as well as negative sentiment words due to their actions which had negative connotations. In comparison, GASTech is skewed towards negative sentiment words due to the issues of contamination surrounding their activities which purported caused harm to the lives of the people.  
+The above shows the bigram words associated with the key organizations - GASTech, POK, Government and WFA. It is observed WFA, an NGO, had positive sentiment scores during to its supportive role in the community. The Government and POK have fairly balanced spread of positive and negative sentiment scores for the associated bigram words due to their roles and the events occurred. Notably, GASTech has word bigrams in the news texts that was skewed towards negative sentiment scores due to the issues of water contamination which purportedly caused harm to the lives of the people in the community.  
 
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
