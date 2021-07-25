@@ -772,9 +772,12 @@ g <- GAStech_graph %>%
 g + theme_graph()
 ```
 
+In the above network graph on the emails tracked, family surnames related to existing POK members could be seen in the nodes identified. We will investigate these in the datatables on GASTech employee records at S3.4.2, as well as the external POK background record at S3.4.3 below. [Note: The external POK background record is extracted from the MC1 data provided in the 2014 VastChallenge.] 
+
+
 ### 3.4.2 Check internal records of the key email personnels (nodes)
 
-Create datatable to provide staff's details by name, department, position, citizenship country, and military service:
+Create datatable to provide staff's details by name, department, position, citizenship country, and military service branch served, if any:
 
 ```{r echo=FALSE}
 GASTech_nodes_selected <- GASTech_nodes[,c(1,7,14, 15,8,17)]
@@ -792,15 +795,17 @@ DT::datatable(GASTech_nodes_selected,
               lineHeight="95%")
 ```
 
+The above employee record datatable is created to provide supporting information for employees identified as important nodes in the email communication network. It should be used together
+
 ### 3.4.3 Map key email personnel (nodes) to their affiliations with POK if any
 
-Process name column format in "employee_backgrounds" file to match employee names in GasTech_nodes. The latter has a "." between first and midd/last names.
+Minor processing of the "employee_background" file (obtain from MC1 data in 2014 VastChallenge) is needed before it can be merged with the "employee_records" file due to difference in name format. The employee names in the "employee_records" was extracted from the email addresses of GASTech staff and had a "." in the space between first and middle/last names. We will need to change the employee name format of the "employee_background"  (which has a space between first and middle/last names) to match accordingly as follow. 
 
 ```{r echo=FALSE}
 employee_backgrounds$Name <- gsub(" ", ".", employee_backgrounds$Name, fixed=TRUE)
 ```
 
-Merge the 2 files and remove unnecessary columns which cannot fit into the interactive datatable below.
+Thereafter, merge the 2 files and remove unnecessary columns which cannot fit into the interactive datatable below.
 
 ```{r echo=FALSE}
 GASTech_nodes_background <- merge(x = GASTech_nodes_selected, y = employee_backgrounds, 
@@ -822,25 +827,12 @@ DT::datatable(GASTech_nodes_background, rownames = FALSE,
               lineHeight="95%")
 ```
 
-By inputting the "POK" in the search tab, all GASTech staff with POK affiliations would be automatically retrieved. In total, there are 5 POK direct members, namely, Minke.Mies, Isia.Vann, Loreto.Bodrogi, Hennie.Osvaldo. and Inga.Ferro. To extract all other personnel with external profiles, click on the upward arrow at the "POK/Others" column and you could see all other suspicious member profiles such as Edward.Vann who could be related to the Vann members of POK as well as Ruscella.Mies.Haber (page2) who is aunt of Minke.Mies.
+By inputting "POK" in the search tab, all GASTech staff with POK affiliations would be automatically retrieved. In total, there are 5 POK members on GASTech's empployee list, namely, Minke.Mies, Isia.Vann, Loreto.Bodrogi, Hennie.Osvaldo. and Inga.Ferro. To extract all other personnel with external profiles, click on the upward arrow at the "POK/Others" column and you could see all other suspicious member profiles such as Edward.Vann who could be related to the Vann members of POK as well as Ruscella.Mies.Haber (page2) who is aunt of Minke.Mies. Notably, all the staff with POK affiliation are in the Security Department whilst other profiled individuals are in the Administration Department.
 
-
-
-### 3.4.2 Identify key email personnels (nodes) by job title:
-
-```{r, layout="l-page", fig.width=12, fig.height=8}
-g <- GAStech_graph %>%
-  ggraph(layout = "fr") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
-  scale_edge_width(range = c(0.1, 5)) +
-  geom_node_point(aes(colour = CurrentEmploymentTitle, 
-                      size = centrality_betweenness()))+
-  ggtitle("Nodes & Edges of Email Network - Job Holders")
-g + theme_graph()
-```
 
 ### 3.4.3 Identify key email personnels (nodes) by citizenship country:
+
+The following network graph would visualize the email communication in terms of the citizenship country of the personnel (represented as nodes):
 
 ```{r, layout="l-page",fig.width=10, fig.width=8}
 g <- GAStech_graph %>%
@@ -855,7 +847,11 @@ g <- GAStech_graph %>%
 g + theme_graph()
 ```
 
+It is clear from the above network graph that the email communication tend to be clustered amongst individuals from the same country, such as Kronos-centric or Tethys-centric. In the above network graph, there are more Tethy nodes than Kronos nodes although GASTech was located in Kronos. This means many of the GASTech employees are not local Kronosians but foreigners from Tethys.
+
 ### 3.4.4 Identify key email personnels (nodes) by military service branch:
+
+The following network graph would visualize the email communication in terms of the military service branch of the personnel (represented as nodes):
 
 ```{r, layout="l-page", fig.width=10, fig.height=8}
 g <- GAStech_graph %>%
