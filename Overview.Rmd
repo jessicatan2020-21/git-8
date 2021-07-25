@@ -6,7 +6,7 @@ output: distill::distill_article
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 # Comparision between 2014 and 2021 VastChallenges - Mini-Challenge 1 
