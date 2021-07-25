@@ -2356,7 +2356,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p><img src="Methodology_files/figure-html5/unnamed-chunk-18-1.png" width="960" /></p>
 </div>
 <p>From above, there are indeed quite a few pairs/groups of newsgroups with similar word sentiment profiles, e.g. The Abila Post and Central Bulletin had same sentiment scores. Could these pairs/groups be posting common or similar news articles to result in the same scores? If so, which are the primary and derivative sources? We seek to understand this in the following analysis.</p>
-<h2 id="detect-important-words-by-newsgroup-via-tfidf">1.4 Detect important words by newsgroup via TFIDF</h2>
+<h2 id="identify-important-words-by-newsgroup-via-tfidf">1.4 Identify important words by newsgroup via TFIDF</h2>
 <p>The following step is to identify the most important words for each newsgroup using tfidf:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2384,7 +2384,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p>The above shows some newsgroup with common profiles in terms of TFIDF. This would be investigated further below by reviewing the correlation of the news articles.</p>
 <h2 id="identify-news-articles-with-high-correlation">1.5 Identify news articles with high correlation</h2>
-<p>First, pairwise correlation is calculated for the news article texts in each newsgroup which would be used to plot the link analysis of the newsgroups:</p>
+<p>First, pairwise correlation is calculated for the news articles in each newsgroup:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>newsgroup_cors1</span> <span class='op'>&lt;-</span> <span class='va'>words_by_newsgroup</span> <span class='op'>%&gt;%</span>
