@@ -32,7 +32,7 @@ Using the AFINN sentiment dictionary, the word stems of the text in the news art
 
 In ***reporting of central figures*** in the GASTech contamination saga, it was noted the positive sentiment words such as “like” and “survived” which were bigrams for POK leaders Bodrogi and Carmine weighed significantly to result in positive sentiment scores for these individuals. At the other spectrum were Kronos President Kapelou, Minister Nespola and GASTech CEO Sanjorge with negative sentiment scores due to bigrams such as “threatening”, “no” and “escapes” in the news reporting of these persons.
 
-In ***reporting of key places***, the news sentiment scores varying in tandem with the events occurring in these places. For example, the numerous protests convening in Elodis resulted in negatively skewed sentiment scores on the associated word bigrams whilst the reported “help” provided to the rural areas resulted in positive word bigrams and corresponding sentiment score.
+In ***reporting of key places***, the news sentiment scores vary in tandem with the reporting of events occurring in these places. For example, the numerous protests convening in Elodis resulted in negatively skewed sentiment scores on the associated word bigrams whilst the reported “help” provided to the rural areas resulted in positive word bigrams and corresponding sentiment score.
 
 For ***reporting of significant events***, the sentiment scores seem to be correct for most, i.e. negative sentiment associated with arrests, deaths, protests etc. However, for events such as disease and contamination, the associated words such as “responsible” and “increased” (which are classified by AFINN as positive sentiment words) may have incorrectly tilted the sentiment scores in the positive direction.
 
