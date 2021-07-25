@@ -13,10 +13,24 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The news data set comprised 12,928 news articles from 29 newsgroups which were published over 11+ years from Oct 1982 to Mar 2014.  Of the newsgroups, the biggest contributor was News Online Today with 105 articles, and the smallest contributor was World Source with less than 30 articles over the same period. Whilst the 1st news articles on the Gastech contamination issues emerged in 1982, the coverage was made by only 5 news groups and there was also a 6 years gap from 1985 to 1992 during which there was no reporting. 
 
-# Question1
+# Question 1
 
 To characterize the news data, the sentiment scores of the news articles by each newsgroup was calculated using the AFINN sentiment dictionary. It is noted the Abila Post and the Central Bulletin both had the most negative sentiment score of -1.5 out of the 29 newsgroups whilst The Tulip and The Guide were at the other spectrum with the least negative sentiment score of around -0.7. Overall, the average sentiment scores across the newsgroups were all in the deficit, perhaps reflecting the negative views of the media on the developments in Kronos at large.
 
 Visualisation of the news articles showed similarity in their TFIDF profiles for some news groups. This was followed up by computing the correlation values of news articles across the newsgroups. It was observed that there was high correlation of more than 0.7 in 5 clusters of newsgroups. These clusters were centred around 5 core newsgroups which we can infer as the primary news sources since they acted like a hub linking up all the other newsgroups within their clusters. The 5 primary news sources are (1) “The Abila”, (2) “The World”, (3) “International Times”, (4) “Kronos Star”, and (5) “Homeland Illumination”, and  the other newsgroups surrounding these hubs are the derivative news sources.
 
 Data wrangling was further performed to obtain a data table containing the correlated news article pairs with column details on text-id, published date, title and respective newsgroup for each of the paired news articles. With the this interactive datatable, we would be able to identify the primary and derivative news sources for each highly correlated news article pairs (>0.8 correlation) by comparing their published dates. The article with the earlier date would be the primary source as the later article would essentially be obtaining its text from the primary article after the primary article has been published.
+
+# Question 2
+
+The word cloud performed on the consolidated news articles showed the topics surrounding the issue of GASTech’s contamination of water resources in Elodis. Negative key words such as “violent”, “death”, and “protesters” surrounded the discussion of the topic with core parties such as “POK”  and GASTech and its CEO, Sten Sanjorge showing up with high frequency. 
+Using the AFINN sentiment dictionary, the word stems of the text in the news articles are calculated for their sentiment scores and the results are reported in an interactive data table to allow user to input word for retrieval of the corresponding sentiment score. These sentiment scores are further applied to word bigrams in news reporting of specific people, places and events. 
+
+In reporting of central figures in the GASTech contamination saga, it was noted the positive sentiment words such as “like” and “survived” which were bigrams for POK leaders Bodrogi and Carmine weighed significantly to result in positive sentiment scores for these individuals. At the other spectrum were Kronos President Kapelou, Minister Nespola and GASTech CEO Sanjorge with negative sentiment scores due to bigrams such as “threatening”, “no” and “escapes” in the news reporting of these persons.
+
+In reporting of key places, the news sentiment scores varying in tandem with the events occurring in these places. For example, the numerous protests convening in Elodis resulted in negatively skewed sentiment scores on the associated word bigrams whilst the reported “help” provided to the rural areas resulted in positive word bigrams and corresponding sentiment score.
+
+For reporting of significant events report, the sentiment scores seem to be correct for most, i.e. negative sentiment associated with arrests, deaths, protests etc. However, for events such as disease and contamination, the associated words such as “responsible” and “increased” (which are classified by AFINN as positive sentiment words) may have incorrectly tilted the sentiment scores in the positive direction.
+
+Finally, the word bigrams surrounding reporting of organizations central to the topic such as GASTech, POK, Kronos Government and WFA (NGO) were also retrieved and sentiment-scored. WFA was attributed positive sentiment scores due to its supportive actions in the community. The Government and POK were accorded fairly balanced spread of positive and negative sentiment scores arising from their advocations and the events that occurred. Notably, GASTech derived negative sentiment scores due to the news reporting on issues of water contamination which purportedly caused harm to the people in the community.
+
