@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Comparision between 2014 and 2021 VastChallenges - Mini-Challenge 1 
 
+
 Compared to present, the Vast Challenge in 2014 had a somewhat different focus for Mini-Challenge (“MC”) 1. The questions then were:
 
 a.	Who are the leaders?
