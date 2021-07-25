@@ -434,16 +434,6 @@ With the above datatable, we would be able to identify the primary and derivativ
 
 
 
-Remove duplicate text columns:
-
-```{r}
-art_cors_table3 <- subset(art_cors_table3, select = -(6))
-art_cors_table4 <- art_cors_table3[,c(1,4,2,5,3)]
-
-```
-
-
-
 # 2. Detect & characterize biases in news sources
 
 
