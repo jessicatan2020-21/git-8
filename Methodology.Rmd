@@ -285,7 +285,7 @@ newsgroup_cors1 <- words_by_newsgroup %>%
 ```
 
 
-
+The following network graph is plotted with the newsgroups as nodes and the correlation scores of their news articles as edges. We can observe that higher correlation between newsgroups as represented by the thickening and darkening of their edges with each other. For example, "The World" is in the centre of a sub-network of newsgroups   
 
 ```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 set.seed(2017)
@@ -298,7 +298,7 @@ newsgroup_cors1 %>%
   geom_edge_link(aes(alpha = correlation, 
                      width = correlation)) +
   geom_node_point(size = 6, 
-                  color = "lightgreen") +
+                  color = "cornflowerblue") +
   geom_node_text(aes(label = name),
                  color = "red",
                  repel = TRUE) +
