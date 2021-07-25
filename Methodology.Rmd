@@ -1,5 +1,5 @@
 ---
-title: "Methodology"
+title: "Data Preparation & Methodology"
 author: "Jessica Tan"
 date: "7/25/2021"
 output: distill::distill_article
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(fig.retina=3,
                       warning = FALSE)
 ```
 
-## A(i) Installation and loading of packages:
+## A(i) Installation and loading of packages
 
 The relevant packages required in analysis are installed as follows:
 
