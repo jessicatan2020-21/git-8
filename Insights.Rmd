@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ***Q1&2:*** The news dataset comprised 12,928 news articles from 29 newsgroups which were published over 11+ years from Oct 1982 to Mar 2014.  Of the newsgroups, the biggest contributor was News Online Today with 105 articles, and the smallest contributor was World Source with less than 30 articles over the same period. When the 1st news articles on the Gastech contamination issues emerged in 1982, the coverage was made by only 5 newsgroups then, and there was also a 6-year gap from 1985 to 1992 during which there was no reporting on the topic of GASTech's water contamination. 
 
 
-***Qn3:*** The data retrieved and analysed comprised (i) email headers and (ii) employee records provided for the present 2021 MC1. In addition, the author also retrieved the profiled individuals’ background file provided for MC1 in the 2014 VastChallenge to support in addressing the requirements of Qn3. Please see Qn3 Reply below for details. 
+***Qn3:*** The data retrieved and analysed comprised (i) email headers and (ii) employee records provided for the present 2021 MC1. In addition, the author also retrieved the profiled individuals’ background record file provided for MC1 in the 2014 VastChallenge to support in addressing the requirements of Qn3. Please see Qn3 Reply below for details. 
 
 
 # Qn1 Reply
@@ -36,7 +36,7 @@ In ***reporting of key places***, the news sentiment scores varying in tandem wi
 
 For ***reporting of significant events***, the sentiment scores seem to be correct for most, i.e. negative sentiment associated with arrests, deaths, protests etc. However, for events such as disease and contamination, the associated words such as “responsible” and “increased” (which are classified by AFINN as positive sentiment words) may have incorrectly tilted the sentiment scores in the positive direction.
 
-Finally, the word bigrams surrounding ***reporting of organizations** central to the topic such as GASTech, POK, Kronos Government and WFA (NGO) were also retrieved and sentiment-scored. WFA was attributed positive sentiment scores due to its supportive actions in the community. The Government and POK were accorded fairly balanced spread of positive and negative sentiment scores arising from their advocations and the events that occurred. Notably, GASTech derived negative sentiment scores due to the news reporting on issues of water contamination which purportedly caused harm to the people in the community.
+Finally, the word bigrams surrounding ***reporting of organizations*** central to the topic such as GASTech, POK, Kronos Government and WFA (NGO) were also retrieved and sentiment-scored. WFA was attributed positive sentiment scores due to its supportive actions in the community. The Government and POK were accorded fairly balanced spread of positive and negative sentiment scores arising from their advocations and the events that occurred. Notably, GASTech derived negative sentiment scores due to the news reporting on issues of water contamination which purportedly caused harm to the people in the community.
 
 # Qn 3
 
