@@ -493,7 +493,7 @@ usenet_bigram_counts <- usenet_bigrams %>%
 
 ## 2.4 Sentiment scoring of associated word bigrams - key people
 
-The following plots the high frequency sentiment words used in news articles to surround these names (i.e. key individuals for in POK, GasTech and Kronos Government):
+The sentiment scores based on bigrams ofthe associated words surrounding the news reporting of key individuals are illustrated in the following bar charts:
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=12}
 key_persons <- c("sanjorge", "carmine", "nespola", "marek", 
@@ -516,8 +516,12 @@ usenet_bigram_counts %>%
        y = "Words associated with key persons")
 ```
 
-It can be observed key POK personnel Bodrogi and Carmine elicited positive sentiment scores whilst others such as Elian and Juliana had negative sentiment scores resulting from the occurrence of their deaths. Government officials, Nespola and President Kapelou as well as GASTech CEO Sanjorge also have negative scores resulting from negative words frequenly associated with their names in news articles. Marek, a POK member, also drew negative sentiment score due to the word "stop", a word for obstacle.This will be investigated in the news texts later.  
+It can be observed that the key POK personnels i.e., Bodrogi and Carmine elicited positive sentiment scores whilst others such as Elian and Juliana had negative sentiment scores with the reporting of their deaths. Government officials, Nespola and President Kapelou as well as GASTech CEO Sanjorge also have negative scores resulting from negative words frequently associated with their news. Marek, a POK member, also drew negative sentiment score due to the word "stop", a word depicting obstraction.This will be investigated in the news texts later.  
 
+
+## 2.5 Sentiment scoring of associated word bigrams - key organizations
+
+The sentiment scores based on bigrams ofthe associated words surrounding the news reporting of the important organizational bodies are also calculated and represented in the following bar charts:
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 
