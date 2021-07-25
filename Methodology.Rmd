@@ -521,10 +521,9 @@ It can be observed that the key POK personnels i.e., Bodrogi and Carmine elicite
 
 ## 2.5 Sentiment scoring of associated word bigrams - key organizations
 
-The sentiment scores based on bigrams of the associated words surrounding news reporting of the important organizational bodies are also calculated and represented in bar charts as provided below:
+The sentiment scoring of word bigrams associated with news reporting of the key organizations - GASTech, POK, Government and WFA - are illustrated in the following bar charts: 
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
-
 key_entities <- c("pok", "government", "gastech", "wfa")
 
 usenet_bigram_counts %>%
@@ -544,11 +543,13 @@ usenet_bigram_counts %>%
        y = "Words associated with key entities")
 ```
 
-The above shows the bigram words associated with the key organizations - GASTech, POK, Government and WFA. It is observed WFA, an NGO, had positive sentiment scores during to its supportive role in the community. The Government and POK have fairly balanced spread of positive and negative sentiment scores for the associated bigram words due to their roles and the events occurred. Notably, GASTech has word bigrams in the news texts that was skewed towards negative sentiment scores due to the issues of water contamination which purportedly caused harm to the lives of the people in the community.  
+It is observed that WFA, an NGO, had positive sentiment scores in line with its supportive role in the community. The Government and POK have fairly balanced spread of positive and negative sentiment scores (from their associated bigram words) due to their advocations and the dramatic events that occurred. Notably, GASTech has word bigrams in the news texts that was skewed towards negative sentiment scores due to the issues of water contamination which purportedly caused harm to the lives of the people in the community.  
 
 
+## 2.6 Sentiment scoring of associated word bigrams - key organizations
+
+The sentiment scoring of word bigrams associated with news reporting of the key organizations - GASTech, POK, Government and WFA - are illustrated in the following bar charts: 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
-
 key_places <- c("tiskele", "elodis", "kronos","tethys", 
                 "abila", "rural", "city", "fields", "port", "pilau")
 
@@ -567,7 +568,6 @@ usenet_bigram_counts %>%
   scale_y_reordered() +
   labs(x = "Sentiment value of occurrences",
        y = "Words associated with important places")
-
 ```
 Similarly, the above places have varying sentiment scores due to the events reported in association with these places. For example, the numerous protests that occurred in Elodis results in a negatively skewed sentiment score whilst the help provided to the rural areas in positive sentiment score.
 
