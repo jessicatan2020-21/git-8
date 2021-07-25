@@ -443,17 +443,6 @@ art_cors_table4 <- art_cors_table3[,c(1,4,2,5,3)]
 ```
 
 
-```{r, layout="l-body-outset", fig.width=14, fig.height=8}
-
-DT::datatable(art_cors_table4,
-              rownames = FALSE,
-              options = list(pageLength=3),
-              filter = 'top')%>%
-  formatRound(columns = c('correlation'),
-              digits = 4)%>%
-  formatStyle(0, target = "row",
-              lineHeight = "85%")
-```
 
 # 2. Detect & characterize biases in news sources
 
