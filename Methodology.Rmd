@@ -548,7 +548,8 @@ It is observed that WFA, an NGO, had positive sentiment scores in line with its 
 
 ## 2.6 Sentiment scoring of associated word bigrams - key organizations
 
-The sentiment scoring of word bigrams associated with news reporting of the key organizations - GASTech, POK, Government and WFA - are illustrated in the following bar charts: 
+The sentiment scoring of word bigrams associated with news reporting of the landmark places are illustrated in the following bar charts: 
+
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 key_places <- c("tiskele", "elodis", "kronos","tethys", 
                 "abila", "rural", "city", "fields", "port", "pilau")
@@ -569,11 +570,13 @@ usenet_bigram_counts %>%
   labs(x = "Sentiment value of occurrences",
        y = "Words associated with important places")
 ```
-Similarly, the above places have varying sentiment scores due to the events reported in association with these places. For example, the numerous protests that occurred in Elodis results in a negatively skewed sentiment score whilst the help provided to the rural areas in positive sentiment score.
 
+Similarly, the above places have news sentiment scores varying in tandem with the events occuring in these places. For example, the numerous protests convened in Elodis resulted in negatively skewed sentiment scores on the associated word bigrams whilst the reported "help" provided to the rural areas resulted in positive word bigrams and corresponding sentiment score.
+
+
+## 2.7 Sentiment scoring of associated word bigrams - events occurred
 
 ```{r,layout="l-body-outset", fig.width=10, fig.height=10}
-
 key_places <- c("contamination", "protests", "kidnapping", "death","arrested",
                 "disease", "movement", "alliance")
 
