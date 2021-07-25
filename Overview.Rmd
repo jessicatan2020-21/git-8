@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Background
 
-The Vast Challenge in 2014 had a somewhat different focus for Mini-Challenge (“MC”) 1. The questions were:
+Compared to present, the Vast Challenge in 2014 had a somewhat different focus for Mini-Challenge (“MC”) 1. The questions then were:
 
 
 a.	Who are the leaders?
@@ -32,7 +32,7 @@ b.	Characterize any biases you identify in these news sources, with respect to t
 
 c.	Given the data sources provided, use visual analytics to identify potential official and unofficial relationships among GASTech, POK, and the APA, and Government.
 
-Looking at the above, it is noted that MC1 in 2014 was mostly targeted at identifying key individuals, their organizational network and connection with GASTech. On the other hand, MC1 in 2021 seeks to understand how individuals, events and places are portrayed by news media as well identify the network of relationships from email communication.  
+Looking at the above, it can be construed that MC1 in 2014 was mostly targeted at identifying key individuals, their organizational network and connection with GASTech. On the other hand, MC1 in 2021 seeks to understand how individuals, events and places are portrayed by news media as well identify the network of relationships from email communication.  
 
 # Literature Review
 
