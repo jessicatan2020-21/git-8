@@ -9,7 +9,7 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# 2014 versus 2021 VastChallenge - Mini-Challenge 1 
+# 2014 vs 2021 VastChallenge - MC 1 
 
 
 Compared to present, the Vast Challenge in 2014 had a somewhat different focus for Mini-Challenge (“MC”) 1. The questions then were:
