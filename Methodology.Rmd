@@ -416,6 +416,7 @@ art_cors_table3 <-  merge(x=art_cors_table2,y=articles,
 names(art_cors_table3)[5] <- paste("text2")
 ```
 
+
 Finally, the datatable for the correlated news article pairs is set up as follow:
 
 ```{r, layout="l-body-outset", fig.width=14, fig.height=8}
@@ -432,36 +433,35 @@ DT::datatable(art_cors_table1,
 With the above datatable, we would be able to identify the primary and derivative news sources for each highly correlated news article pairs (>0.8 correlation) by comparing their published dates. The article with the earlier date would be the primary source as the later article would essentially be obtaining its text from the primary article after the primary article has been published.
 
 
+# 2. Detect & characterize biases in news sources
 
-# 2. Detect & characterize biases in news articles 
 
-## 2.1 Obtain frequency of important words to perform word cloud:
+## 2.1 Perform wordcloud using key words obtained in above tfidf:
 ```{r}
 totalwords <- words_by_newsgroup %>%
   count(word, sort=TRUE)
-
 ```
-
-The following wordcloud shows the important words in the news articles based on tfidf:
-
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 set.seed(1234)
 wordcloud(totalwords$word,totalwords$n,max.words = 115,
           colors = brewer.pal(8, "Dark2"))
-
 ```
+The wordcloud highlighted the issues such as death, contamination, kidnapping, as well as the names of the key parties including Juliana Vann who died from illness caused by the river contamination, GASTech's CEO, Sten Sanjorge, POK, Government etc.
 
-The wordcloud the names of the key players and parties including Juliana Vann who died from illness caused by the river contamination, as well as GASTech's CEO, Sten Sanjorge, POK, Government etc.
 
-We further retrieve the top sentiment words and their scores using AFINN (sentiment words dictionary). This would first be presented in a datatable for ease of retrieval and checking against the sentiment words which would be subsequently plotted for "specific people, places, and events" (in response to Qn 2 of MC1).
+## 2.2 Identify associated sentiment words in news reporting
+
+To identify news bias, the important sentiment words used in the news articles are retrieved and sentiment-scored (via AFINN).
 
 ```{r}
 top_sentiment_words <- words_by_newsgroup %>%
   mutate(word=wordStem(word))%>%
   inner_join(get_sentiments("afinn"), by = "word") %>%
-  mutate(contribution = value * n / sum(n))
+  mutate(sentiment = value * n / sum(n))
 
 ```
+
+The outcome is presented in the form of the following datatable for viewing the sentiment words used in the articles, the frequency used, and their corresponding sentiment values:
 
 ```{r, layout="l-body-outset", fig.width=12, fig.height=10}
 
@@ -469,13 +469,15 @@ DT::datatable(top_sentiment_words, rownames = FALSE,
               options = list(pageLength=8), 
               filter = 'top')%>% 
   formatRound('value',4) %>%
-  formatRound('contribution',4) %>%
+  formatRound('sentiment',4) %>%
   formatStyle(0, 
               target = 'row', 
               lineHeight='90%')
 ```
 
+## 2.3 Compute & apply word bigram in news sentiment analysis
 
+The word bigrams are calculated for the news articles
 ```{r}
 usenet_bigrams <- cleaned_text %>%
   unnest_tokens(bigram, text, token = "ngrams", n = 2)
@@ -488,6 +490,8 @@ usenet_bigram_counts <- usenet_bigrams %>%
   separate(bigram, c("word1", "word2"), sep = " ")
 
 ```
+
+## 2.4 Sentiment scoring of associated word bigrams - key people
 
 The following plots the high frequency sentiment words used in news articles to surround these names (i.e. key individuals for in POK, GasTech and Kronos Government):
 
