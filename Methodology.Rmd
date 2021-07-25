@@ -283,6 +283,9 @@ newsgroup_cors1 <- words_by_newsgroup %>%
                sort = TRUE)
 ```
 
+
+Next, network graph is plotted with the newsgroups as nodes and the correlation scores of their news articles as edges:
+
 ```{r, layout="l-body-outset", fig.width=8, fig.height=6}
 set.seed(2017)
 
@@ -301,14 +304,14 @@ newsgroup_cors1 %>%
   theme_void()
 ```
 
-The following network graph is plotted with the newsgroups as nodes and the correlation scores of their news articles as edges. We can observe that higher correlation between newsgroups is represented by the thickening and darkening of their edges with each other. For example, "The World" is in the centre of a sub-network of newsgroups and has expressedly stronger correlation with "Who What News". In another sub-network group, "The Abila Post" showed stronger text correlation with "Central Bulletin". 
+From above, we can observe that higher correlation between newsgroups is represented by the thickening and darkening of their edges with each other. For example, "The World" is in the centre of a sub-network of newsgroups and has expressedly stronger correlation with "Who What News". In another sub-network group, "The Abila Post" showed stronger text correlation with "Central Bulletin". 
 
 In total, we observed 5 separate sub-newsgroup network led by 5 core newsgroup which we can infer as the primary news sources since they acted like a hub and showed strong correlation of 0.7 or more with other newsgroups in their hubs. The 5 primary news sources are (1) "The Abila", (2) "The World", (3) "International Times", (4) "Kronos Star", and (5) "Homeland Illumination". The other newsgroups within these hubs are the derivative news sources.    
 
 
-## 1.6 Further trace newsgroup correlation in their news articles
+## 1.6 Further trace newsgroup correlation in the news articles
 
-In the following, text wrangling is done to obtain a datatable on news article pairs with column details on txtid, date, title and newsgroup for each pair of correlated news articles. We selected article pairs with high correlation of >0.8. 
+In the following, text wrangling is performed to obtain a datatable containing the correlated news article pairs with column details on text id, date, title and newsgroup each of the paired news articles. We selected article pairs with high correlation of >0.8. 
 
 ```{r}
 newsgroup_cors <- words_by_newsgroup %>%
@@ -319,8 +322,6 @@ newsgroup_cors <- words_by_newsgroup %>%
 
 art_cors <- newsgroup_cors
 ```
-
-Each pair of correlated article is merged into a common dataframe with column details on text id, dates, titles, newsgroups and correlation score. Data wrangling to extract and merge these details are as follow:
 
 ```{r}
 art_cors <- merge(x=art_cors,y=dates, 
