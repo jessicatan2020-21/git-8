@@ -25,7 +25,7 @@ Visualisation of the news articles showed similarity in their TFIDF profiles for
 
 Data wrangling was further performed to obtain a data table containing the correlated news article pairs with column details on text-id, published date, title and respective newsgroup for each of the paired news articles. With the this interactive datatable, we would be able to identify the primary and derivative news sources for each highly correlated news article pairs (>0.8 correlation) by comparing their published dates. The article with the earlier date would be the primary source as the later article would essentially be obtaining its text from the primary article after the primary article has been published.
 
-# Qn2 Reply:
+# Qn2 Reply
 
 The word cloud performed on the consolidated news articles showed the topics surrounding the issue of GASTech’s contamination of water resources in Elodis. Negative key words such as “violent”, “death”, and “protesters” surrounded the discussion of the topic with core parties such as “POK”  and GASTech and its CEO, Sten Sanjorge showing up with high frequency. 
 Using the AFINN sentiment dictionary, the word stems of the text in the news articles are calculated for their sentiment scores and the results are reported in an interactive data table to allow user to input word for retrieval of the corresponding sentiment score. These sentiment scores are further applied to word bigrams in news reporting of specific people, places and events. 
