@@ -5,18 +5,22 @@ date: "7/25/2021"
 output: distill::distill_article
 ---
 
+# A. Data Preparation & Exploration
 
-```{r setup, include=FALSE}
+The following is run to define the Global Settings for code chunks in this post:
+
+```{r setup, include=TRUE}
 knitr::opts_chunk$set(fig.retina=3,
                       echo = TRUE,
                       eval = TRUE,
                       message = FALSE,
                       warning = FALSE)
-
 ```
 
+## A(i) Installation and loading of required packages:
 
-# 1.0 Overview
+The relevant packages required in analysis are installed as follows:
+
 ```{r, echo=TRUE, eval=TRUE}
 packages = c('tidytext', 'igraph', 'extrafont',
              'tidygraph', 'ggraph', 'tcltk','anytime',
@@ -38,9 +42,15 @@ for(p in packages){
 }
 ```
 
+
+## A(ii) Import & merge data
+
+Function is create to read and collect all the news articles into a dataframe:
+
 ```{r eval=FALSE}
 news <- "data/news/"
 ```
+
 
 ```{r eval=FALSE}
 read_folder <- function(infolder) {
@@ -53,6 +63,7 @@ read_folder <- function(infolder) {
     unnest(text)
 }
 ```
+
 
 ```{r eval= FALSE}
 raw_text <- tibble(folder = 
@@ -68,12 +79,17 @@ write_rds(raw_text, "data/rds/news.rds")
 
 ```
 
+The created dataframe on news text is then saved to rds file to minimize memory consumption:
 
 ```{r}
 raw_text <- read_rds("data/rds/news.rds")
 cleaning_text <- raw_text
 ```
 
+
+## A(iii) Clean & merge data
+
+The news text is further processed to provide columns for title, date and location which would be extracted from the text column containing the news text:
 
 ```{r}
 cleaning_text$date <- sub("PUBLISHED:", "", raw_text$text, 
@@ -99,11 +115,10 @@ cleaning_text$location <- gsub(paste0("LOCATION:", collapse = "|"), "",
 location <- cleaning_text[c(1,2,6)]
 location <- location[complete.cases(location),]  
 
-
 ```
 
 
-
+Note that although title column is created and copied from the text column, the text column still retain the title of the article for purposes of subsequent processing and analysis. However, location and date published would be removed after it is extracted into separate columns as these 2 details should not be include in the analysis and further processing of the main news text.
 
 ```{r}
 cleaning_text <- cleaning_text[!(is.na(cleaning_text$text) |cleaning_text$text==""|
@@ -121,6 +136,9 @@ after_clean_text <- af_cleaning_text
                    
 ```
 
+# 1. CHARACTERIZE NEWS SOURCES 
+
+## 1.1 Understand Parameters of the News Articles - Frequency & Duration
 
 ```{r echo=FALSE}
 text_count <-after_clean_text %>%
@@ -150,6 +168,7 @@ ggplot(af_cleaning_text,
   
 ```
 
+## 1.2 Further text cleaning to obtain stem words
 
 ```{r}
 cleaned_text <- raw_text %>%
@@ -171,6 +190,7 @@ cleaned_text <- af_cleaning_text %>%
   )
 ```
 
+Text is tokenized and stopwords were removed:
 
 ```{r}
 usenet_words <- cleaned_text %>%
@@ -180,11 +200,15 @@ usenet_words <- cleaned_text %>%
 
 ```
 
+Count word stems:
+
 ```{r}
 usenet_words %>%
   mutate(word=wordStem(word))%>%
   count(word, sort = TRUE)
 ```
+
+Remove meaningless and frequent words not removed in stopwords - title, published & kronos - so that they do not distort the subsequent text visualization:
 
 ```{r}
 words_by_newsgroup <- usenet_words %>%
@@ -195,7 +219,7 @@ words_by_newsgroup <- usenet_words %>%
   ungroup()
 ```
 
-
+## 1.3 Plot the newsgroups by sentiment scores of their articles to detect similar profiles 
 
 ```{r, layout="l-body-outset",  fig.width=10, fig.height=8}
 
@@ -213,12 +237,18 @@ newsgroup_sentiments %>%
   ggtitle("News Sentiment Score using AFINN Sentiment Lexicon")
 ```
 
+From above, there are indeed a few pairs/groups of common sentiment score profiles, e.g. The Abila Post and Central Bulletin had same sentiment scores. Could these pairs/groups be posting common or similar news articles resulting in the same scores? If so, which is the primary and derivative sources? We seek to find out in the following analysis.
+
+The following step is to identify the most important words for each newsgroup using tfidf:
+
 ```{r}
 tf_idf <- words_by_newsgroup %>%
   bind_tf_idf(word, newsgroup, n) %>%
   arrange(desc(tf_idf))
 
 ```
+
+## 1.4 To detect important words by newsgroup using TFIDF
 
 ```{r echo=TRUE, eval=TRUE, layout="l-body-outset", fig.width=16, fig.height=10}
 tf_idf %>%
@@ -234,110 +264,12 @@ tf_idf %>%
 
 ```
 
+The above shows some newsgroup with common profiles in terms of TFIDF. This would be investigated further below by reviewing the correlation of the news articles.
 
 
+## 1.4 To identify news articles with high correlation
 
-```{r}
-newsgroup_cors <- words_by_newsgroup %>%
-  pairwise_cor(id, 
-               word, 
-               n, 
-               sort = TRUE)
-
-art_cors <- newsgroup_cors
-```
-
-
-
-
-```{r}
-art_cors <- merge(x=art_cors,y=dates, 
-                  by.x = "item1",                         
-                  by.y = "id", 
-                  all.x = TRUE, all.y = FALSE)
-
-```
-
-```{r}
-art_cors <- merge(x=art_cors,y=title, 
-                  by.x = "item1",                         
-                  by.y = "id", 
-                  all.x = TRUE, all.y = FALSE)
-
-```
-
-
-
-```{r}
-names(art_cors)[1] <- paste("article1")
-names(art_cors)[2] <- paste("article2")
-names(art_cors)[4] <- paste("newsgroup1")
-names(art_cors)[5] <- paste("date1")
-names(art_cors)[7] <- paste("title1")
-art_cors1 <- art_cors[-c(6)]
-```
-
-
-```{r}
-art_cors1 <- merge(x=art_cors1,y=title, 
-                  by.x = "article2",                         
-                  by.y = "id", 
-                  all.x = TRUE)
-
-```
-
-```{r}
-art_cors2 <- merge(x=art_cors1,y=dates, 
-                  by.x = "article2",                         
-                  by.y = "id", 
-                  all.x = TRUE, all.y = FALSE)
-
-```
-
-```{r}
-names(art_cors2)[7] <- paste("newsgroup2")
-names(art_cors2)[8] <- paste("title2")
-names(art_cors2)[10] <- paste("date2")
-art_cors_final <- art_cors2[-c(9)]
-art_cors_final <- art_cors_final%>%
-  filter(correlation >0.8)
-```
-
-```{r}
-art_cors_table <- art_cors_final[-c(6,8)]
-art_cors_table <- art_cors_table%>%
-  filter(correlation >0.8)
-art_cors_table1 <- art_cors_table[, c(2,4,5,1,6,7,3)]
-art_cors_table2 <- art_cors_table1[, c(1,4,7)]
-```
-
-
-
-
-
-```{r eval=FALSE}
-articles <- cleaned_text[, c(2,3)]
-
-```
-
-```{r eval=FALSE}
-art_cors_table2 <-  merge(x=art_cors_table2,y=articles, 
-                          by.x = "article1",                         
-                          by.y = "id", 
-                          all.x = TRUE)
-names(art_cors_table2)[4] <- paste("text1")
-```
-
-```{r eval=FALSE}
-art_cors_table3 <-  merge(x=art_cors_table2,y=articles, 
-                          by.x = "article2",                         
-                          by.y = "id", 
-                          all.x = TRUE)
-names(art_cors_table3)[5] <- paste("text2")
-art_cors_table3
-```
-
-
+First, pairwise correlation score is calculated by article text of each newsgroup:
 
 
 ```{r}
@@ -369,6 +301,115 @@ newsgroup_cors1 %>%
   theme_void()
 ```
 
+### The above chart clearly visualizes newsgroup with high correlation of the news articles. There are nodes with thicker edges, such as Kronos Star and International News, show the higher correlation of their news articles.
+
+
+### In the following, text wrangling is done to obtain a datatable on news article pairs with column details on txtid, date, title and newsgroup for each pair of correlated news articles. We selected article pairs with high correlation of >0.8. 
+
+```{r}
+newsgroup_cors <- words_by_newsgroup %>%
+  pairwise_cor(id, 
+               word, 
+               n, 
+               sort = TRUE)
+
+art_cors <- newsgroup_cors
+```
+
+Each pair of correlated article is merged into a common dataframe with column details on text id, dates, titles, newsgroups and correlation score. Data wrangling to extract and merge these details are as follow:
+
+```{r}
+art_cors <- merge(x=art_cors,y=dates, 
+                  by.x = "item1",                         
+                  by.y = "id", 
+                  all.x = TRUE, all.y = FALSE)
+
+```
+
+```{r}
+art_cors <- merge(x=art_cors,y=title, 
+                  by.x = "item1",                         
+                  by.y = "id", 
+                  all.x = TRUE, all.y = FALSE)
+
+```
+
+Column names are corrected by pasting over:
+
+```{r}
+names(art_cors)[1] <- paste("article1")
+names(art_cors)[2] <- paste("article2")
+names(art_cors)[4] <- paste("newsgroup1")
+names(art_cors)[5] <- paste("date1")
+names(art_cors)[7] <- paste("title1")
+art_cors1 <- art_cors[-c(6)]
+```
+
+
+```{r}
+art_cors1 <- merge(x=art_cors1,y=title, 
+                  by.x = "article2",                         
+                  by.y = "id", 
+                  all.x = TRUE)
+
+```
+
+
+```{r}
+art_cors2 <- merge(x=art_cors1,y=dates, 
+                  by.x = "article2",                         
+                  by.y = "id", 
+                  all.x = TRUE, all.y = FALSE)
+
+```
+
+To prepare for subsequent visualization, we select only correlated articles more than 0.8:
+
+```{r}
+names(art_cors2)[7] <- paste("newsgroup2")
+names(art_cors2)[8] <- paste("title2")
+names(art_cors2)[10] <- paste("date2")
+art_cors_final <- art_cors2[-c(9)]
+art_cors_final <- art_cors_final%>%
+  filter(correlation >0.8)
+```
+
+To provide dataframe on news articles pairs, we extract and merge relevant columns for each of the 2 correlated news articles - txt id, newsgroup, date and correlation score. Below is for article 1:
+
+```{r}
+art_cors_table <- art_cors_final[-c(6,8)]
+art_cors_table <- art_cors_table%>%
+  filter(correlation >0.8)
+art_cors_table1 <- art_cors_table[, c(2,4,5,1,6,7,3)]
+art_cors_table2 <- art_cors_table1[, c(1,4,7)]
+```
+
+```{r eval=FALSE}
+articles <- cleaned_text[, c(2,3)]
+
+```
+
+```{r eval=FALSE}
+art_cors_table2 <-  merge(x=art_cors_table2,y=articles, 
+                          by.x = "article1",                         
+                          by.y = "id", 
+                          all.x = TRUE)
+names(art_cors_table2)[4] <- paste("text1")
+```
+
+Below is for article 2 of each correlated pair of news articles:
+
+```{r eval=FALSE}
+art_cors_table3 <-  merge(x=art_cors_table2,y=articles, 
+                          by.x = "article2",                         
+                          by.y = "id", 
+                          all.x = TRUE)
+names(art_cors_table3)[5] <- paste("text2")
+
+```
+
+
+### Finally, the datatable for each correlated (>0.8) pair of new articles is ready below for checking and retrieval:
 
 ```{r, layout="l-body-outset", fig.width=14, fig.height=8}
 DT::datatable(art_cors_table1,
@@ -382,13 +423,20 @@ DT::datatable(art_cors_table1,
 
 ```
 
+### Using the above datatable, we would be able to identify highly correlated news articles as well as their primary and derivatives sources going by the published dates. The article with the earlier date in each pair would be the primary source as the later article would essentially be obtaining its text from the earlier article.
 
 
+
+# 2. Detect & characterize biases in news articles 
+
+# 2.1 Obtain frequency of important words to perform word cloud:
 ```{r}
 totalwords <- words_by_newsgroup %>%
   count(word, sort=TRUE)
 
 ```
+
+The following wordcloud shows the important words in the news articles based on tfidf:
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
 set.seed(1234)
@@ -396,6 +444,10 @@ wordcloud(totalwords$word,totalwords$n,max.words = 115,
           colors = brewer.pal(8, "Dark2"))
 
 ```
+
+### The wordcloud the names of the key players and parties including Juliana Vann who died from illness caused by the river contamination, as well as GASTech's CEO, Sten Sanjorge, POK, Government etc.
+
+### We further retrieve the top sentiment words and their scores using AFINN (sentiment words dictionary). This would first be presented in a datatable for ease of retrieval and checking against the sentiment words which would be subsequently plotted for "specific people, places, and events" (in response to Qn 2 of MC1).
 
 ```{r}
 top_sentiment_words <- words_by_newsgroup %>%
@@ -431,10 +483,9 @@ usenet_bigram_counts <- usenet_bigrams %>%
 
 ```
 
-
+### The following plots the high frequency sentiment words used in news articles to surround these names (i.e. key individuals for in POK, GasTech and Kronos Government):
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=12}
-
 key_persons <- c("sanjorge", "carmine", "nespola", "marek", 
                  "bodrogi", "jeroen","juliana","kapelou", "elian")
 
@@ -453,9 +504,9 @@ usenet_bigram_counts %>%
   scale_y_reordered() +
   labs(x = "Sentiment value of occurrences",
        y = "Words associated with key persons")
-
-
 ```
+
+### It can be observed key POK personnel Bodrogi and Carmine elicited positive sentiment scores whilst others such as Elian and Juliana had negative sentiment scores resulting from the occurrence of their deaths. Government officials, Nespola and President Kapelou as well as GASTech CEO Sanjorge also have negative scores resulting from negative words frequenly associated with their names in news articles. Marek, a POK member, also drew negative sentiment score due to the word "stop", a word for obstacle.This will be investigated in the news texts later.  
 
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
@@ -477,8 +528,9 @@ usenet_bigram_counts %>%
   scale_y_reordered() +
   labs(x = "Sentiment value of occurrences",
        y = "Words associated with key entities")
-
 ```
+
+### The above shows the most important sentiment words associated with the key players - GASTech, POK, Government and WFA. WFA, being a non-profit NGO, has positive sentiment scores during to its supportive role. The Government and POK have fairly balanced spread of positive and negative sentiment words due to their supportive roles in their communities as well as negative sentiment words due to their actions which had negative connotations. In comparison, GASTech is skewed towards negative sentiment words due to the issues of contamination surrounding their activities which purported caused harm to the lives of the people.  
 
 
 ```{r, layout="l-body-outset", fig.width=10, fig.height=10}
@@ -500,9 +552,11 @@ usenet_bigram_counts %>%
   facet_wrap(~ word1, scales = "free", nrow = 3) +
   scale_y_reordered() +
   labs(x = "Sentiment value of occurrences",
-       y = "Words associated with key places")
+       y = "Words associated with important places")
 
 ```
+### Similarly, the above places have varying sentiment scores due to the events reported in association with these places. For example, the numerous protests that occurred in Elodis results in a negatively skewed sentiment score whilst the help provided to the rural areas in positive sentiment score.
+
 
 ```{r,layout="l-body-outset", fig.width=10, fig.height=10}
 
@@ -524,8 +578,9 @@ usenet_bigram_counts %>%
   scale_y_reordered() +
   labs(x = "Sentiment value of occurrences",
        y = "Words associated with key events")
-
 ```
+
+## For events reported, the sentiment scores seem to be correct for most, i.e. negative sentiment associated with arrests, deaths, protests etc. However, for events such as disease and contamination, the associated words such as "responsible" and "increased" (which are classified by AFINN as positive sentiment words) may have incorrectly tilted the sentiment scores in the positive direction.  
 
 
 

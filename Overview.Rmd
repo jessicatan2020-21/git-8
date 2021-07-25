@@ -52,5 +52,5 @@ This 3-member faculty team from giCentre of City University spent 80 hours using
 
 # Approach 
 
-It is noted the earlier winning submissions in the 2014 Vast Challenge had used a variety of analytical tools and approaches to examine the case data and provide the graphical illustrations. However, none had used Rstudio programming language and in consideration of the advancement in analytical techniques of the past 7 years, this study would attempt to use Rstudio for end-to-end data wrangling and investigation to provide the graphical responses to the MC1 questions.
+It is noted the earlier winning submissions in the 2014 Vast Challenge had used a variety of analytical tools and approaches to examine the case data and provide the graphical illustrations. However, none had used Rstudio programming language and in consideration of the advancement in analytical techniques of the past 7 years, this study would attempt to use Rstudio programming for end-to-end data wrangling and investigation to provide the graphical responses to the MC1 questions.
 
