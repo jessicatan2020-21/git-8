@@ -682,6 +682,7 @@ cleaned_emails <- cleaned_emails %>%
 ```
 
 Transpose tables to have columns for each newly create To_id above:
+
 ```{r}
 email_transpose <- pivot_longer(cleaned_emails, cols=2:13, 
                                  names_to = "Recipient#",
@@ -722,6 +723,7 @@ names(email_transpose)[2] <- paste("id_To")
 ```
 
 This is to obtain id for recipients (different from earlier to collect id for sender)
+
 ```{r echo=TRUE, eval=TRUE}
 GASTech_nodes <- merge(x= nodes, y= employee_rec, 
                        by.x = "Name", by.y="EmailAddress", all.x = FALSE)
@@ -736,7 +738,6 @@ GAStech_edges_aggregated <- email_transpose %>%
   filter(id_From!=id_To) %>%
   filter(Weight > 1) %>%
   ungroup()
-
 ```
 
 
@@ -771,6 +772,57 @@ g <- GAStech_graph %>%
 g + theme_graph()
 ```
 
+### 3.4.2 Check internal records of the key email personnels (nodes)
+
+Create datatable to provide staff's details by name, department, position, citizenship country, and military service:
+
+```{r echo=FALSE}
+GASTech_nodes_selected <- GASTech_nodes[,c(1,7,14, 15,8,17)]
+GASTech_nodes_selected <-GASTech_nodes_selected %>% 
+  rename("Department"=CurrentEmploymentType, "JobTitle"=CurrentEmploymentTitle,
+         "Country"=CitizenshipCountry, "MilitarySvc"=MilitaryServiceBranch)
+```
+
+```{r, layout="l-page"}
+DT::datatable(GASTech_nodes_selected, 
+              options = list(pageLength=7), 
+              filter = 'top', rownames = FALSE)%>%
+  formatStyle(0, 
+              target = 'row',
+              lineHeight="95%")
+```
+
+### 3.4.3 Map key email personnel (nodes) to their affiliations with POK if any
+
+Process name column format in "employee_backgrounds" file to match employee names in GasTech_nodes. The latter has a "." between first and midd/last names.
+
+```{r echo=FALSE}
+employee_backgrounds$Name <- gsub(" ", ".", employee_backgrounds$Name, fixed=TRUE)
+```
+
+Merge the 2 files and remove unnecessary columns which cannot fit into the interactive datatable below.
+
+```{r echo=FALSE}
+GASTech_nodes_background <- merge(x = GASTech_nodes_selected, y = employee_backgrounds, 
+                                  by.x = "Name", 
+                                  by.y = "Name", all.x = TRUE)
+GASTech_nodes_background <- GASTech_nodes_background[, -c(5:7)]
+names(GASTech_nodes_background)[2] <- paste("Gender")
+names(GASTech_nodes_background)[5] <- paste("POK/Others")
+```
+
+Finally, set up the datatable joining internal employee data with external POK background, if any. 
+
+```{r, layout="l-page", fig.width=8, fig.height=10}
+DT::datatable(GASTech_nodes_background, rownames = FALSE,
+              options = list(pageLength=6), 
+              filter = 'top')%>%
+  formatStyle(0, 
+              target = 'row',
+              lineHeight="95%")
+```
+
+By inputting the "POK" in the search tab, all GASTech staff with POK affiliations would be automatically retrieved. In total, there are 5 POK direct members, namely, Minke.Mies, Isia.Vann, Loreto.Bodrogi, Hennie.Osvaldo. and Inga.Ferro. To extract all other personnel with external profiles, click on the upward arrow at the "POK/Others" column and you could see all other suspicious member profiles such as Edward.Vann who could be related to the Vann members of POK as well as Ruscella.Mies.Haber (page2) who is aunt of Minke.Mies.
 
 
 
@@ -838,21 +890,6 @@ g + facet_edges(~Weekday) +
   theme(legend.position = 'bottom')
 ```
 
-### 3.4.6 Create datatable to provide staff's details by name, department, position, citizenship country, and military service:
 
-```{r echo=FALSE}
-GASTech_nodes_selected <- GASTech_nodes[,c(1,14, 15,8,17)]
-```
-
-```{r, layout="l-page", fig.width=8, fig.height=10}
-DT::datatable(GASTech_nodes_selected, 
-              colnames = c("Department"=3, "Position"=4,"Country"=5,
-                           "Military Service"=6),
-              options = list(pageLength=7), 
-              filter = 'top')%>%
-  formatStyle(0, 
-              target = 'row',
-              lineHeight="95%")
-```
 
 
