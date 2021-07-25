@@ -11,9 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Data
 
-The news data set comprised 12,928 news articles from 29 newsgroups which were published over 11+ years from Oct 1982 to Mar 2014.  Of the newsgroups, the biggest contributor was News Online Today with 105 articles, and the smallest contributor was World Source with less than 30 articles over the same period. Whilst the 1st news articles on the Gastech contamination issues emerged in 1982, the coverage was made by only 5 news groups and there was also a 6 years gap from 1985 to 1992 during which there was no reporting. 
+***Q1&2:*** The news dataset comprised 12,928 news articles from 29 newsgroups which were published over 11+ years from Oct 1982 to Mar 2014.  Of the newsgroups, the biggest contributor was News Online Today with 105 articles, and the smallest contributor was World Source with less than 30 articles over the same period. When the 1st news articles on the Gastech contamination issues emerged in 1982, the coverage was made by only 5 newsgroups then, and there was also a 6-year gap from 1985 to 1992 during which there was no reporting on the topic of GASTech's water contamination. 
 
-# Question 1
+
+***Qn3:*** The data retrieved and analysed comprised (i) email headers and (ii) employee records provided for the present 2021 MC1. In addition, the author also retrieved the profiled individuals’ background file provided for MC1 in the 2014 VastChallenge to support in addressing the requirements of Qn3. Please see Qn3 Reply below for details. 
+
+
+# Qn1 Reply
 
 To characterize the news data, the sentiment scores of the news articles by each newsgroup was calculated using the AFINN sentiment dictionary. It is noted the Abila Post and the Central Bulletin both had the most negative sentiment score of -1.5 out of the 29 newsgroups whilst The Tulip and The Guide were at the other spectrum with the least negative sentiment score of around -0.7. Overall, the average sentiment scores across the newsgroups were all in the deficit, perhaps reflecting the negative views of the media on the developments in Kronos at large.
 
@@ -21,7 +25,7 @@ Visualisation of the news articles showed similarity in their TFIDF profiles for
 
 Data wrangling was further performed to obtain a data table containing the correlated news article pairs with column details on text-id, published date, title and respective newsgroup for each of the paired news articles. With the this interactive datatable, we would be able to identify the primary and derivative news sources for each highly correlated news article pairs (>0.8 correlation) by comparing their published dates. The article with the earlier date would be the primary source as the later article would essentially be obtaining its text from the primary article after the primary article has been published.
 
-# Question 2
+# Qn2 Reply:
 
 The word cloud performed on the consolidated news articles showed the topics surrounding the issue of GASTech’s contamination of water resources in Elodis. Negative key words such as “violent”, “death”, and “protesters” surrounded the discussion of the topic with core parties such as “POK”  and GASTech and its CEO, Sten Sanjorge showing up with high frequency. 
 Using the AFINN sentiment dictionary, the word stems of the text in the news articles are calculated for their sentiment scores and the results are reported in an interactive data table to allow user to input word for retrieval of the corresponding sentiment score. These sentiment scores are further applied to word bigrams in news reporting of specific people, places and events. 
