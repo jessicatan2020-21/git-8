@@ -2118,7 +2118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </code></pre>
 </div>
 </div>
-<h2 id="ai-installation-and-loading-of-required-packages">A(i) Installation and loading of required packages:</h2>
+<h2 id="ai-installation-and-loading-of-packages">A(i) Installation and loading of packages:</h2>
 <p>The relevant packages required in analysis are installed as follows:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2143,8 +2143,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </code></pre>
 </div>
 </div>
-<h2 id="aii-import-merge-data">A(ii) Import &amp; merge data</h2>
-<p>Function is create to read and collect all the news articles into a dataframe:</p>
+<h2 id="aii-import-data">A(ii) Import data</h2>
+<p>Function is created to read and collect all the news articles into a dataframe:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>news</span> <span class='op'>&lt;-</span> <span class='st'>"data/news/"</span>
@@ -2180,7 +2180,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </code></pre>
 </div>
 </div>
-<p>The created dataframe on news text is then saved to rds file to minimize memory consumption:</p>
+<p>The created dataframe containing the news articles is then saved to rds file to minimize memory consumption:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>raw_text</span> <span class='op'>&lt;-</span> <span class='fu'>read_rds</span><span class='op'>(</span><span class='st'>"data/rds/news.rds"</span><span class='op'>)</span>
@@ -2188,7 +2188,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </code></pre>
 </div>
 </div>
-<h2 id="aiii-clean-merge-data">A(iii) Clean &amp; merge data</h2>
+<h2 id="aiii-text-pre-processing">A(iii) Text Pre-processing</h2>
 <p>The news text is further processed to provide columns for title, date and location which would be extracted from the text column containing the news text:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">

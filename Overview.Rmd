@@ -57,3 +57,4 @@ This 3-member faculty team from giCentre of City University spent 80 hours using
 
 It is noted the earlier winning submissions in the 2014 Vast Challenge had used a variety of analytical tools and approaches to examine the case data and provide the graphical illustrations. However, none had used Rstudio ("R") programming language and in consideration of the advancements in analytical techniques of the past 7 years with R programming being one of the proponents for programming language, this study would attempt to use R for end-to-end data wrangling and analysis to provide the graphical responses to the MC1 questions.
 
+
