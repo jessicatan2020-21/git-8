@@ -9,7 +9,7 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Comparision between 2014 and 2021 VastChallenges - Mini-Challenge 1 
+# 2014 versus 2021 VastChallenge - Mini-Challenge 1 
 
 
 Compared to present, the Vast Challenge in 2014 had a somewhat different focus for Mini-Challenge (“MC”) 1. The questions then were:
@@ -32,7 +32,7 @@ b.	Characterize any biases you identify in these news sources, with respect to t
 
 c.	Given the data sources provided, use visual analytics to identify potential official and unofficial relationships among GASTech, POK, and the APA, and Government.
 
-Looking at the above, it can be construed that MC1 in 2014 was mostly targeted at identifying key individuals, their organizational network and connection with GASTech. On the other hand, MC1 in 2021 seeks to understand how individuals, events and places are portrayed by news media as well identify the network of relationships from email communication.  
+Looking at the above, it could be construed that MC1 in 2014 was mostly targeted at identifying key POK individuals, their organizational network and connection with GASTech. On the other hand, MC1 in 2021 seeks to understand how individuals, events and places are portrayed by news media as well identify the network of relationships amongst the players.  
 
 # Literature Review
 
@@ -40,15 +40,15 @@ The following is a review of the award-winning submissions for MC1 in 2014:
 
 ***1.	Tianjin University (Cai) – Outstanding Results Presentation Supported by Visualizations***
 
-This top-prize winning team of 6 student-cum-faculty members spent 180 hours using D3, MySQL, Excel and Visio to chart and link the dots between events and individuals over timelines to identify key individuals and organizational network of POK. Elaborate charts and graphs were made to map out the inner circle as well as extended network of POK, identifying their leaders and contributors, as well as explaining important events. In particular, relationships and interpersonal linkages of the POK with GASTech were detected via visualisation of news and email data. 
+This top-prize winning team of 6 student-cum-faculty members spent 180 hours using D3, MySQL, Excel and Visio to chart and link the dots between events and individuals over timelines to identify key individuals and the organizational network of POK. Elaborate charts and graphs were made to map out the inner circle as well as extended network of POK, identifying their leaders and contributors, as well as explaining the occurrence of important events. In particular, relationships and interpersonal linkages of the POK with GASTech were detected via visualisation of news and email data. 
 
-***2.	Tianjin University (Gao) -Honourable Mention: Effective Use of Coordinated Visualizations***
+***2.	Tianjin University (Gao) - Honourable Mention: Effective Use of Coordinated Visualizations***
 
-This 5-student team spent 150 hours using D3.js, Highcharts, Vis., Python, Excel and Visual Studio to graphically address the MC1 questions. Drawing up well-coordinated and aesthetically pleasing graphs, the team traced and identified the key members of POK, their infiltration of GASTech as employees as well as the events on timeline leading up to the disappearance of GASTech’s executives. They provided strong persuasion that POK is behind the disappearance of the GASTech executives. 
+This 5-student team spent 150 hours using D3.js, Highcharts, Vis., Python, Excel and Visual Studio to graphically address the MC1 questions. Drawing up well-coordinated and aesthetically pleasing graphs, the team traced and identified the key members of POK, their infiltration of GASTech as employees as well as the events on the timeline leading up to the disappearance of GASTech’s executives. They provided strong persuasion that POK is behind the disappearance of the GASTech executives. 
 
 ***3.	University of Buenos Aires (Avila) – Honourable Mention: Effective Timeline Visualizations***
 
-This 3-member student team spent 60 hours using Tableau, JavaScript, Excel and Rapidminer to respond to the MC1 requirements. Through Tableau’s smooth graphics, the leadership team of POK were identified and their affiliates working within GASTech were extracted and linked by visualizing news and email data. The submission lacked the detailed analysis and intricate charting of the prior 2 submissions but perhaps have its simplicity and ease of understanding as reasons for the Honourable Mention.
+This 3-member student team spent 60 hours using Tableau, JavaScript, Excel and Rapidminer to respond to the MC1 requirements. Through Tableau’s smooth graphics, the leadership team of POK were identified and their affiliates working within GASTech were extracted and linked by visualizing news and email data. The submission lacked the detailed analysis and intricate charting of the prior 2 submissions but perhaps have its simplicity and easy comprehension as reasons for the Honourable Mention.
 
 ***4.	City University London (giCentre) – Honourable Mention: Novelty in Visualization***
 
@@ -56,6 +56,5 @@ This 3-member faculty team from giCentre of City University spent 80 hours using
 
 # Approach of This Study
 
-It is noted the earlier winning submissions in the 2014 Vast Challenge had used a variety of analytical tools and approaches to examine the case data and provide the graphical illustrations. However, none had used Rstudio ("R") programming language and in consideration of the advancements in analytical techniques of the past 7 years with R programming being one of the proponents for programming language, this study would attempt to use R for end-to-end data wrangling and analysis to provide the graphical responses to the MC1 questions.
-
+It is noted the abovementioned winning submissions in the 2014 Vast Challenge had used a variety of analytical tools and approaches to examine the case data and provide the graphical analysis and illustrations. However, none had used Rstudio ("R") programming language and in consideration of the advancements in analytical techniques of the past 7 years with R being one of the important programming languages, this study would attempt to use R for end-to-end data wrangling and analysis to provide the graphical responses to the MC1 questions.
 
