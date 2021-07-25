@@ -573,7 +573,7 @@ usenet_bigram_counts %>%
        y = "Words associated with important places")
 ```
 
-Similarly, the above places have news sentiment scores varying in tandem with the events occuring in these places. For example, the numerous protests convened in Elodis resulted in negatively skewed sentiment scores on the associated word bigrams whilst the reported "help" provided to the rural areas resulted in positive word bigrams and corresponding sentiment score.
+Similarly, the above places have news sentiment scores varying in tandem with the events occurring in these places. For example, the numerous protests convening in Elodis resulted in negatively skewed sentiment scores on the associated word bigrams whilst the reported "help" provided to the rural areas resulted in positive word bigrams and corresponding sentiment score.
 
 
 ## 2.7 Sentiment scoring of associated word bigrams - events occurred
@@ -828,7 +828,7 @@ DT::datatable(GASTech_nodes_background, rownames = FALSE,
               lineHeight="95%")
 ```
 
-By inputting "POK" in the search tab, all GASTech staff with POK affiliations would be automatically retrieved. In total, there are 5 POK members on GASTech's empployee list, namely, Minke.Mies, Isia.Vann, Loreto.Bodrogi, Hennie.Osvaldo. and Inga.Ferro. To extract all other personnel with external profiles, click on the upward arrow at the "POK/Others" column and you could see all other suspicious member profiles such as Edward.Vann who could be related to the Vann members of POK as well as Ruscella.Mies.Haber (page2) who is aunt of Minke.Mies. Notably, all the staff with POK affiliation are in the Security Department whilst other profiled individuals are in the Administration Department.
+By inputting “POK” in the search tab of the abovesaid data table (containing profiled individuals background record), all GASTech staff with POK affiliations would be immediately retrieved. In total, there are 5 POK members on GASTech’s employment roll. These are (1) Minke.Mies, (2) Isia.Vann, (3) Loreto.Bodrogi, (4) Hennie.Osvaldo. and (5) Inga.Ferro. To extract the other staff with external profiles, simply click on the upward arrow at the “POK/Others” column and you could see the other profiled staff such as Edward.Vann who share the same Vann surname with a few important members of the POK as well as Ruscella.Mies.Haber, who is aunt of Minke.Mies. Notably, all staff with POK affiliation are in the Security Department whilst the other profiled staff are in Administration Department.
 
 
 ## 3.4.4 Identify key email personnels (nodes) by citizenship country:
