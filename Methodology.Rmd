@@ -237,11 +237,11 @@ newsgroup_sentiments %>%
   ggtitle("News Sentiment Score using AFINN Sentiment Lexicon")
 ```
 
-From above, there are indeed quite a few pairs/groups of newsgroups with similar word sentiment profiles, e.g. The Abila Post and Central Bulletin had same sentiment scores. Could these pairs/groups be posting common or similar news articles to result in the same scores? If so, which are the primary and derivative sources? We seek to understand this in the following analysis.
+From above, there are indeed quite a few pairs/groups of newsgroups with similar text sentiment profiles, e.g. The Abila Post and Central Bulletin had same sentiment scores. Could these pairs/groups be posting common or similar news articles to result in the same scores? If so, which are the primary and derivative sources? We will try to investigate this in the following analysis.
 
 
 
-## 1.4 Identify important words by newsgroup via TFIDF
+## 1.5 Identify important words by newsgroup via TFIDF
 
 The following step is to identify the most important words for each newsgroup using tfidf:
 
@@ -267,7 +267,7 @@ tf_idf %>%
 
 ```
 
-The above shows some newsgroup with common profiles in terms of TFIDF. This would be investigated further below by reviewing the correlation of the news articles.
+The above shows some newsgroups with common profiles in terms of TFIDF. This would be investigated further below by reviewing the correlation of the news articles.
 
 
 ## 1.5 Identify news articles with high correlation
