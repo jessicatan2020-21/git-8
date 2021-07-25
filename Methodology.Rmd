@@ -17,7 +17,7 @@ knitr::opts_chunk$set(fig.retina=3,
                       warning = FALSE)
 ```
 
-## A(i) Installation and loading of required packages:
+## A(i) Installation and loading of packages:
 
 The relevant packages required in analysis are installed as follows:
 
@@ -43,9 +43,9 @@ for(p in packages){
 ```
 
 
-## A(ii) Import & merge data
+## A(ii) Import data
 
-Function is create to read and collect all the news articles into a dataframe:
+Function is created to read and collect all the news articles into a dataframe:
 
 ```{r eval=FALSE}
 news <- "data/news/"
@@ -79,7 +79,7 @@ write_rds(raw_text, "data/rds/news.rds")
 
 ```
 
-The created dataframe on news text is then saved to rds file to minimize memory consumption:
+The created dataframe containing the news articles is then saved to rds file to minimize memory consumption:
 
 ```{r}
 raw_text <- read_rds("data/rds/news.rds")
@@ -87,7 +87,7 @@ cleaning_text <- raw_text
 ```
 
 
-## A(iii) Clean & merge data
+## A(iii) Text Pre-processing
 
 The news text is further processed to provide columns for title, date and location which would be extracted from the text column containing the news text:
 
