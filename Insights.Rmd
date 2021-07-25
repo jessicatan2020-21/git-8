@@ -1,5 +1,5 @@
 ---
-title: "Insights"
+title: "insights"
 author: "Jessica Tan"
 date: "7/25/2021"
 output: html_document
@@ -9,9 +9,14 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Qn1:
+# Data
 
 The news data set comprised 12,928 news articles from 29 newsgroups which were published over 11+ years from Oct 1982 to Mar 2014.  Of the newsgroups, the biggest contributor was News Online Today with 105 articles, and the smallest contributor was World Source with less than 30 articles over the same period. Whilst the 1st news articles on the Gastech contamination issues emerged in 1982, the coverage was made by only 5 news groups and there was also a 6 years gap from 1985 to 1992 during which there was no reporting. 
-To characterize the news data, the sentiment scores of the news articles by each newsgroup was calculated using the AFINN sentiment dictionary. It is noted the Abila Post and the Central Bulletin both had the most negative sentiment score of -1.5 out of the 29 newsgroups whilst The Tulip and The Guide were at the other spectrum with the least negative sentiment score of around -0.7. Overall, the average sentiment scores across the newsgroups were all in the deficit, perhaps reflecting the negative views of the media on the developments in Kronos at large.
-Visualisation of the news articles showed similarity in their TFIDF profiles for some news groups. This was followed up by computing the correlation values of news articles across the newsgroups. It was observed that there was high correlation of more than 0.7 in 5 clusters of newsgroups. These clusters were centred around 5 core newsgroups which we can infer as the primary news sources since they acted like a hub link up all the other news groups within their cluster. The 5 primary news sources are (1) “The Abila”, (2) “The World”, (3) “International Times”, (4) “Kronos Star”, and (5) “Homeland Illumination”, and  the other newsgroups surrounding these hubs are the derivative news sources.
 
+# Question1
+
+To characterize the news data, the sentiment scores of the news articles by each newsgroup was calculated using the AFINN sentiment dictionary. It is noted the Abila Post and the Central Bulletin both had the most negative sentiment score of -1.5 out of the 29 newsgroups whilst The Tulip and The Guide were at the other spectrum with the least negative sentiment score of around -0.7. Overall, the average sentiment scores across the newsgroups were all in the deficit, perhaps reflecting the negative views of the media on the developments in Kronos at large.
+
+Visualisation of the news articles showed similarity in their TFIDF profiles for some news groups. This was followed up by computing the correlation values of news articles across the newsgroups. It was observed that there was high correlation of more than 0.7 in 5 clusters of newsgroups. These clusters were centred around 5 core newsgroups which we can infer as the primary news sources since they acted like a hub linking up all the other newsgroups within their clusters. The 5 primary news sources are (1) “The Abila”, (2) “The World”, (3) “International Times”, (4) “Kronos Star”, and (5) “Homeland Illumination”, and  the other newsgroups surrounding these hubs are the derivative news sources.
+
+Data wrangling was further performed to obtain a data table containing the correlated news article pairs with column details on text-id, published date, title and respective newsgroup for each of the paired news articles. With the this interactive datatable, we would be able to identify the primary and derivative news sources for each highly correlated news article pairs (>0.8 correlation) by comparing their published dates. The article with the earlier date would be the primary source as the later article would essentially be obtaining its text from the primary article after the primary article has been published.
